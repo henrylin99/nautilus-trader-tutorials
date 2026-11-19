@@ -1,0 +1,1337 @@
+# 第17章：机器学习和AI
+
+## 学习目标
+
+- 理解机器学习在量化交易中的应用场景
+- 掌握使用NautilusTrader集成ML模型的方法
+- 学会构建端到端的机器学习交易系统
+- 实现模型的训练、部署和在线学习
+
+## 17.1 特征工程
+
+### 17.1.1 价格特征提取
+
+```python
+import numpy as np
+import pandas as pd
+from typing import Dict, List, Tuple
+from scipy import stats
+from sklearn.preprocessing import StandardScaler, RobustScaler
+
+class FeatureExtractor:
+    """交易特征提取器"""
+
+    def __init__(self, lookback_periods: List[int] = [5, 10, 20, 50]):
+        self.lookback_periods = lookback_periods
+        self.scalers = {}
+
+    def extract_price_features(self, prices: pd.Series) -> pd.DataFrame:
+        """提取价格相关特征"""
+        features = pd.DataFrame(index=prices.index)
+
+        # 基础价格特征
+        features['returns'] = prices.pct_change()
+        features['log_returns'] = np.log(prices / prices.shift(1))
+
+        # 不同周期的收益率
+        for period in self.lookback_periods:
+            features[f'return_{period}d'] = prices.pct_change(period)
+            features[f'log_return_{period}d'] = np.log(prices / prices.shift(period))
+
+        # 滚动统计特征
+        for period in [10, 20, 50]:
+            features[f'ma_{period}'] = prices.rolling(period).mean()
+            features[f'std_{period}'] = prices.rolling(period).std()
+            features[f'min_{period}'] = prices.rolling(period).min()
+            features[f'max_{period}'] = prices.rolling(period).max()
+
+            # 价格相对位置
+            features[f'price_position_{period}'] = (
+                (prices - features[f'min_{period}]) /
+                (features[f'max_{period}'] - features[f'min_{period}'])
+            )
+
+        # 技术指标
+        features = self._add_technical_indicators(features, prices)
+
+        return features
+
+    def _add_technical_indicators(self, features: pd.DataFrame, prices: pd.Series) -> pd.DataFrame:
+        """添加技术指标"""
+        # RSI
+        delta = prices.diff()
+        gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+        rs = gain / loss
+        features['rsi'] = 100 - (100 / (1 + rs))
+
+        # MACD
+        exp1 = prices.ewm(span=12).mean()
+        exp2 = prices.ewm(span=26).mean()
+        features['macd'] = exp1 - exp2
+        features['macd_signal'] = features['macd'].ewm(span=9).mean()
+        features['macd_histogram'] = features['macd'] - features['macd_signal']
+
+        # 布林带
+        ma20 = prices.rolling(20).mean()
+        std20 = prices.rolling(20).std()
+        features['bb_upper'] = ma20 + 2 * std20
+        features['bb_lower'] = ma20 - 2 * std20
+        features['bb_position'] = (prices - features['bb_lower']) / (features['bb_upper'] - features['bb_lower'])
+
+        # 动量指标
+        for period in [5, 10, 20]:
+            features[f'momentum_{period}'] = prices / prices.shift(period) - 1
+
+        # 波动率
+        features['volatility_10'] = features['log_returns'].rolling(10).std() * np.sqrt(252)
+        features['volatility_20'] = features['log_returns'].rolling(20).std() * np.sqrt(252)
+
+        # 价格加速度
+        features['acceleration'] = features['log_returns'].diff()
+
+        # Z-score
+        for period in [20, 50]:
+            features[f'zscore_{period}'] = (
+                (prices - prices.rolling(period).mean()) /
+                prices.rolling(period).std()
+            )
+
+        return features
+
+    def extract_volume_features(self, volumes: pd.Series) -> pd.DataFrame:
+        """提取成交量特征"""
+        features = pd.DataFrame(index=volumes.index)
+
+        # 基础成交量特征
+        features['volume_ma_10'] = volumes.rolling(10).mean()
+        features['volume_ma_20'] = volumes.rolling(20).mean()
+        features['volume_ratio_10'] = volumes / features['volume_ma_10']
+        features['volume_ratio_20'] = volumes / features['volume_ma_20']
+
+        # 成交量标准差
+        features['volume_std_10'] = volumes.rolling(10).std()
+
+        # 成交量变化率
+        features['volume_change'] = volumes.pct_change()
+
+        # VWAP（简化版）
+        # 需要同时传入价格数据
+        if hasattr(self, 'prices'):
+            vwap = (self.prices * volumes).rolling(20).sum() / volumes.rolling(20).sum()
+            features['vwap'] = vwap
+            features['price_vwap_ratio'] = self.prices / vwap
+
+        # On-Balance Volume (OBV)
+        price_change = self.prices.diff() if hasattr(self, 'prices') else pd.Series(0, index=volumes.index)
+        obv = (price_change > 0).astype(int) * volumes - (price_change < 0).astype(int) * volumes
+        features['obv'] = obv.cumsum()
+        features['obv_ma_10'] = features['obv'].rolling(10).mean()
+
+        return features
+
+    def extract_microstructure_features(self, orderbook: Dict) -> pd.DataFrame:
+        """提取市场微观结构特征"""
+        features = pd.DataFrame()
+
+        if not orderbook:
+            return features
+
+        # 买卖价差
+        if 'bids' in orderbook and 'asks' in orderbook:
+            best_bid = orderbook['bids'][0][0] if orderbook['bids'] else 0
+            best_ask = orderbook['asks'][0][0] if orderbook['asks'] else 0
+            features['spread'] = best_ask - best_bid
+            features['spread_pct'] = features['spread'] / ((best_bid + best_ask) / 2)
+
+            # 订单簿不平衡
+            bid_volume = sum(level[1] for level in orderbook['bids'][:5])
+            ask_volume = sum(level[1] for level in orderbook['asks'][:5])
+            total_volume = bid_volume + ask_volume
+            features['order_imbalance'] = (bid_volume - ask_volume) / total_volume if total_volume > 0 else 0
+
+            # 中点价格
+            features['mid_price'] = (best_bid + best_ask) / 2
+
+            # 加权中点价格
+            features['weighted_mid'] = (best_bid * ask_volume + best_ask * bid_volume) / total_volume
+
+        return features
+
+    def extract_time_features(self, timestamps: pd.DatetimeIndex) -> pd.DataFrame:
+        """提取时间相关特征"""
+        features = pd.DataFrame(index=timestamps)
+
+        # 时间特征
+        features['hour'] = timestamps.hour
+        features['day_of_week'] = timestamps.dayofweek
+        features['day_of_month'] = timestamps.day
+        features['month'] = timestamps.month
+
+        # 周期性编码（正弦余弦变换）
+        features['hour_sin'] = np.sin(2 * np.pi * features['hour'] / 24)
+        features['hour_cos'] = np.cos(2 * np.pi * features['hour'] / 24)
+        features['dow_sin'] = np.sin(2 * np.pi * features['day_of_week'] / 7)
+        features['dow_cos'] = np.cos(2 * np.pi * features['day_of_week'] / 7)
+
+        # 市场时段（针对24小时交易）
+        features['is_asian_session'] = ((features['hour'] >= 0) & (features['hour'] < 8)).astype(int)
+        features['is_london_session'] = ((features['hour'] >= 8) & (features['hour'] < 16)).astype(int)
+        features['is_ny_session'] = ((features['hour'] >= 13) & (features['hour'] < 22)).astype(int)
+
+        return features
+
+    def create_lag_features(self, features: pd.DataFrame, lags: List[int] = [1, 2, 3, 5, 10]) -> pd.DataFrame:
+        """创建滞后特征"""
+        lagged_features = pd.DataFrame(index=features.index)
+
+        for column in features.columns:
+            for lag in lags:
+                lagged_features[f'{column}_lag_{lag}'] = features[column].shift(lag)
+
+        return lagged_features
+
+    def create_rolling_features(self, features: pd.DataFrame, windows: List[int] = [5, 10, 20]) -> pd.DataFrame:
+        """创建滚动窗口特征"""
+        rolling_features = pd.DataFrame(index=features.index)
+
+        for column in features.select_dtypes(include=[np.number]).columns:
+            for window in windows:
+                # 滚动均值
+                rolling_features[f'{column}_rolling_mean_{window}'] = features[column].rolling(window).mean()
+                # 滚动标准差
+                rolling_features[f'{column}_rolling_std_{window}'] = features[column].rolling(window).std()
+                # 滚动最大值
+                rolling_features[f'{column}_rolling_max_{window}'] = features[column].rolling(window).max()
+                # 滚动最小值
+                rolling_features[f'{column}_rolling_min_{window}'] = features[column].rolling(window).min()
+
+        return rolling_features
+
+    def scale_features(self, features: pd.DataFrame, method: str = 'standard') -> pd.DataFrame:
+        """特征缩放"""
+        if method == 'standard':
+            scaler = StandardScaler()
+        elif method == 'robust':
+            scaler = RobustScaler()
+        else:
+            return features
+
+        # 拟合和转换数值特征
+        numeric_features = features.select_dtypes(include=[np.number])
+        scaled_features = scaler.fit_transform(numeric_features)
+
+        # 创建新的DataFrame
+        scaled_df = pd.DataFrame(
+            scaled_features,
+            index=features.index,
+            columns=numeric_features.columns
+        )
+
+        # 保留非数值特征
+        non_numeric_features = features.select_dtypes(exclude=[np.number])
+        final_features = pd.concat([scaled_df, non_numeric_features], axis=1)
+
+        # 保存scaler用于后续使用
+        self.scalers[method] = scaler
+
+        return final_features
+
+    def select_features(self, features: pd.DataFrame, target: pd.Series, method: str = 'correlation') -> pd.DataFrame:
+        """特征选择"""
+        if method == 'correlation':
+            # 相关性特征选择
+            correlations = features.corrwith(target).abs()
+            selected_features = correlations[correlations > 0.1].index
+            return features[selected_features]
+
+        elif method == 'mutual_info':
+            # 互信息特征选择
+            from sklearn.feature_selection import mutual_info_regression
+            mi_scores = mutual_info_regression(features.fillna(0), target.fillna(0))
+            mi_scores = pd.Series(mi_scores, index=features.columns)
+            selected_features = mi_scores[mi_scores > 0.01].index
+            return features[selected_features]
+
+        return features
+
+class RealTimeFeatureExtractor:
+    """实时特征提取器"""
+
+    def __init__(self, feature_extractor: FeatureExtractor):
+        self.feature_extractor = feature_extractor
+        self.window_data = {
+            'prices': pd.Series(),
+            'volumes': pd.Series(),
+            'timestamps': pd.DatetimeIndex([])
+        }
+        self.window_size = 200  # 保持最近200个数据点
+
+    def update(self, price: float, volume: float, timestamp: pd.Timestamp) -> Dict:
+        """更新实时数据并提取特征"""
+        # 添加新数据
+        self.window_data['prices'] = self.window_data['prices'].append(
+            pd.Series([price], index=[timestamp])
+        )
+        self.window_data['volumes'] = self.window_data['volumes'].append(
+            pd.Series([volume], index=[timestamp])
+        )
+
+        # 保持窗口大小
+        if len(self.window_data['prices']) > self.window_size:
+            self.window_data['prices'] = self.window_data['prices'].iloc[-self.window_size:]
+            self.window_data['volumes'] = self.window_data['volumes'].iloc[-self.window_size:]
+
+        # 提取特征
+        features = {}
+        if len(self.window_data['prices']) >= 20:
+            # 价格特征
+            price_features = self.feature_extractor.extract_price_features(self.window_data['prices'])
+            if not price_features.empty:
+                latest_features = price_features.iloc[-1].to_dict()
+                features.update(latest_features)
+
+            # 成交量特征
+            volume_features = self.feature_extractor.extract_volume_features(self.window_data['volumes'])
+            if not volume_features.empty:
+                latest_volume_features = volume_features.iloc[-1].to_dict()
+                features.update(latest_volume_features)
+
+        return features
+```
+
+### 17.1.2 标签工程
+
+```python
+class LabelEngine:
+    """标签生成引擎"""
+
+    def __init__(self):
+        self.label_methods = {}
+
+    def create_fixed_horizon_labels(self, prices: pd.Series, horizon: int = 5,
+                                   threshold: float = 0.001) -> pd.Series:
+        """创建固定时间窗口标签"""
+        future_returns = prices.pct_change(horizon).shift(-horizon)
+
+        labels = pd.Series(0, index=prices.index)  # 0: 持有
+
+        # 设置标签
+        labels[future_returns > threshold] = 1   # 1: 买入
+        labels[future_returns < -threshold] = -1  # -1: 卖出
+
+        return labels
+
+    def create_triple_barrier_labels(self, prices: pd.Series, upper_barrier: float = 0.02,
+                                    lower_barrier: float = -0.02, max_holding: int = 20) -> pd.Series:
+        """创建三重屏障标签"""
+        labels = pd.Series(0, index=prices.index)  # 默认持有
+        returns = np.log(prices / prices.shift(1))
+
+        for i in range(len(prices) - max_holding):
+            # 计算累积收益
+            cum_returns = returns.iloc[i:i+max_holding+1].cumsum()
+
+            # 检查是否触及上轨
+            upper_touch = cum_returns >= upper_barrier
+            if upper_touch.any():
+                touch_index = cum_returns[upper_touch].index[0]
+                labels.loc[touch_index] = 1
+                continue
+
+            # 检查是否触及下轨
+            lower_touch = cum_returns <= lower_barrier
+            if lower_touch.any():
+                touch_index = cum_returns[lower_touch].index[0]
+                labels.loc[touch_index] = -1
+                continue
+
+            # 都未触及，标记为持有
+            labels.iloc[i + max_holding] = 0
+
+        return labels
+
+    def create_dynamic_threshold_labels(self, prices: pd.Series, atr_period: int = 14,
+                                       multiplier: float = 2.0) -> pd.Series:
+        """创建动态阈值标签（基于ATR）"""
+        # 计算ATR
+        high_low = pd.DataFrame({
+            'high': prices,
+            'low': prices,
+            'prev_close': prices.shift(1)
+        })
+        tr = pd.concat([
+            high_low['high'] - high_low['low'],
+            abs(high_low['high'] - high_low['prev_close']),
+            abs(high_low['low'] - high_low['prev_close'])
+        ], axis=1).max(axis=1)
+        atr = tr.rolling(atr_period).mean()
+
+        # 动态阈值
+        upper_threshold = multiplier * atr
+        lower_threshold = -multiplier * atr
+
+        labels = pd.Series(0, index=prices.index)
+
+        for i in range(atr_period, len(prices) - 5):
+            future_returns = np.log(prices.iloc[i+1:i+6] / prices.iloc[i])
+
+            # 检查是否超过上轨
+            if (future_returns > upper_threshold.iloc[i]).any():
+                labels.iloc[i] = 1
+            # 检查是否超过下轨
+            elif (future_returns < lower_threshold.iloc[i]).any():
+                labels.iloc[i] = -1
+            else:
+                labels.iloc[i] = 0
+
+        return labels
+
+    def create_regression_labels(self, prices: pd.Series, horizon: int = 5) -> pd.Series:
+        """创建回归标签（预测收益率）"""
+        future_returns = prices.pct_change(horizon).shift(-horizon)
+        return future_returns
+
+    def create_volatility_labels(self, returns: pd.Series, window: int = 20) -> pd.Series:
+        """创建波动率预测标签"""
+        future_vol = returns.rolling(window).std().shift(-window)
+        current_vol = returns.rolling(window).std()
+
+        # 分类：高波动、正常波动、低波动
+        labels = pd.Series(1, index=returns.index)  # 默认正常
+        labels[future_vol > current_vol * 1.2] = 2   # 高波动
+        labels[future_vol < current_vol * 0.8] = 0   # 低波动
+
+        return labels
+
+    def create_trend_labels(self, prices: pd.Series, trend_period: int = 20) -> pd.Series:
+        """创建趋势标签"""
+        # 计算趋势斜率
+        def calculate_trend_slope(prices_window):
+            if len(prices_window) < 2:
+                return 0
+            x = np.arange(len(prices_window))
+            slope, _ = np.polyfit(x, prices_window, 1)
+            return slope
+
+        slopes = prices.rolling(trend_period).apply(calculate_trend_slope)
+
+        # 归一化斜率
+        normalized_slopes = slopes / prices
+
+        labels = pd.Series(0, index=prices.index)
+        labels[normalized_slopes > 0.001] = 1      # 上升趋势
+        labels[normalized_slopes < -0.001] = -1     # 下降趋势
+
+        return labels
+
+    def combine_labels(self, *label_series, weights: List[float] = None) -> pd.Series:
+        """组合多个标签"""
+        if weights is None:
+            weights = [1.0] * len(label_series)
+
+        combined = pd.Series(0.0, index=label_series[0].index)
+
+        for i, label_series_i in enumerate(label_series):
+            combined += label_series_i * weights[i]
+
+        # 归一化到-1, 0, 1
+        combined[combined > 0.5] = 1
+        combined[combined < -0.5] = -1
+        combined[(combined >= -0.5) & (combined <= 0.5)] = 0
+
+        return combined.astype(int)
+
+    def create_multi_class_labels(self, prices: pd.Series, bins: int = 5) -> pd.Series:
+        """创建多分类标签"""
+        returns = prices.pct_change()
+
+        # 使用分位数创建标签
+        labels = pd.qcut(returns, bins, labels=False, duplicates='drop')
+        labels = labels - bins // 2  # 中心化为0
+
+        return labels.fillna(0)
+
+    def get_label_distribution(self, labels: pd.Series) -> Dict:
+        """获取标签分布统计"""
+        distribution = labels.value_counts(normalize=True).to_dict()
+        return {
+            'distribution': distribution,
+            'total_samples': len(labels),
+            'class_balance': max(distribution.values()) / min(distribution.values()) if len(distribution) > 1 else 1.0
+        }
+```
+
+## 17.2 预测模型
+
+### 17.2.1 回归模型
+
+```python
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.svm import SVR
+import xgboost as xgb
+import lightgbm as lgb
+
+class PricePredictionModel:
+    """价格预测模型"""
+
+    def __init__(self, model_type: str = 'xgboost', **model_params):
+        self.model_type = model_type
+        self.model_params = model_params
+        self.model = None
+        self.feature_importance = None
+        self.prediction_history = []
+
+    def create_model(self):
+        """创建模型"""
+        if self.model_type == 'linear':
+            self.model = LinearRegression(**self.model_params)
+        elif self.model_type == 'ridge':
+            self.model = Ridge(**self.model_params)
+        elif self.model_type == 'lasso':
+            self.model = Lasso(**self.model_params)
+        elif self.model_type == 'random_forest':
+            self.model = RandomForestRegressor(**self.model_params)
+        elif self.model_type == 'gradient_boosting':
+            self.model = GradientBoostingRegressor(**self.model_params)
+        elif self.model_type == 'xgboost':
+            self.model = xgb.XGBRegressor(**self.model_params)
+        elif self.model_type == 'lightgbm':
+            self.model = lgb.LGBMRegressor(**self.model_params)
+        elif self.model_type == 'svr':
+            self.model = SVR(**self.model_params)
+        else:
+            raise ValueError(f"Unsupported model type: {self.model_type}")
+
+    def train(self, X: pd.DataFrame, y: pd.Series, validation_split: float = 0.2):
+        """训练模型"""
+        # 划分训练集和验证集
+        split_index = int(len(X) * (1 - validation_split))
+        X_train, X_val = X[:split_index], X[split_index:]
+        y_train, y_val = y[:split_index], y[split_index:]
+
+        # 创建并训练模型
+        self.create_model()
+        self.model.fit(X_train, y_train)
+
+        # 验证模型
+        train_score = self.model.score(X_train, y_train)
+        val_score = self.model.score(X_val, y_val)
+
+        # 获取特征重要性
+        if hasattr(self.model, 'feature_importances_'):
+            self.feature_importance = pd.Series(
+                self.model.feature_importances_,
+                index=X.columns
+            ).sort_values(ascending=False)
+
+        return {
+            'train_score': train_score,
+            'validation_score': val_score,
+            'feature_importance': self.feature_importance
+        }
+
+    def predict(self, X: pd.DataFrame) -> np.ndarray:
+        """预测"""
+        if self.model is None:
+            raise ValueError("Model not trained yet")
+
+        predictions = self.model.predict(X)
+        self.prediction_history.extend(predictions)
+        return predictions
+
+    def predict_with_confidence(self, X: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
+        """带置信度的预测"""
+        predictions = self.predict(X)
+
+        # 对于基于树的模型，使用标准差作为不确定性估计
+        if self.model_type in ['random_forest', 'gradient_boosting', 'xgboost', 'lightgbm']:
+            # 获取每棵树的预测
+            if hasattr(self.model, 'estimators_'):
+                tree_predictions = np.array([
+                    tree.predict(X) for tree in self.model.estimators_
+                ])
+                confidence = np.std(tree_predictions, axis=0)
+            else:
+                # XGBoost/LightGBM使用其他方法
+                confidence = np.ones_like(predictions) * 0.1  # 默认置信度
+        else:
+            confidence = np.ones_like(predictions) * 0.1
+
+        return predictions, confidence
+
+    def update_model(self, X_new: pd.DataFrame, y_new: pd.Series):
+        """增量更新模型"""
+        if self.model is None:
+            self.train(X_new, y_new)
+        elif hasattr(self.model, 'partial_fit'):
+            # 支持增量学习的模型
+            self.model.partial_fit(X_new, y_new)
+        else:
+            # 不支持增量学习，重新训练
+            # 需要保存历史数据
+            pass
+
+    def save_model(self, filepath: str):
+        """保存模型"""
+        import joblib
+        joblib.dump({
+            'model': self.model,
+            'model_type': self.model_type,
+            'model_params': self.model_params,
+            'feature_importance': self.feature_importance
+        }, filepath)
+
+    def load_model(self, filepath: str):
+        """加载模型"""
+        import joblib
+        data = joblib.load(filepath)
+        self.model = data['model']
+        self.model_type = data['model_type']
+        self.model_params = data['model_params']
+        self.feature_importance = data.get('feature_importance')
+```
+
+### 17.2.2 分类模型
+
+```python
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import classification_report, confusion_matrix
+
+class TradingSignalClassifier:
+    """交易信号分类器"""
+
+    def __init__(self, model_type: str = 'xgboost', **model_params):
+        self.model_type = model_type
+        self.model_params = model_params
+        self.model = None
+        self.classes_ = None
+        self.probability_history = []
+
+    def create_model(self):
+        """创建分类模型"""
+        if self.model_type == 'logistic':
+            self.model = LogisticRegression(**self.model_params)
+        elif self.model_type == 'random_forest':
+            self.model = RandomForestClassifier(**self.model_params)
+        elif self.model_type == 'gradient_boosting':
+            self.model = GradientBoostingClassifier(**self.model_params)
+        elif self.model_type == 'xgboost':
+            self.model = xgb.XGBClassifier(**self.model_params)
+        elif self.model_type == 'lightgbm':
+            self.model = lgb.LGBMClassifier(**self.model_params)
+        elif self.model_type == 'svm':
+            self.model = SVC(probability=True, **self.model_params)
+        elif self.model_type == 'naive_bayes':
+            self.model = GaussianNB(**self.model_params)
+        else:
+            raise ValueError(f"Unsupported model type: {self.model_type}")
+
+    def train(self, X: pd.DataFrame, y: pd.Series, validation_split: float = 0.2):
+        """训练分类模型"""
+        # 划分数据
+        split_index = int(len(X) * (1 - validation_split))
+        X_train, X_val = X[:split_index], X[split_index:]
+        y_train, y_val = y[:split_index], y[split_index:]
+
+        # 创建并训练模型
+        self.create_model()
+        self.model.fit(X_train, y_train)
+        self.classes_ = self.model.classes_
+
+        # 评估模型
+        train_pred = self.model.predict(X_train)
+        val_pred = self.model.predict(X_val)
+
+        train_report = classification_report(y_train, train_pred, output_dict=True)
+        val_report = classification_report(y_val, val_pred, output_dict=True)
+
+        # 获取特征重要性
+        feature_importance = None
+        if hasattr(self.model, 'feature_importances_'):
+            feature_importance = pd.Series(
+                self.model.feature_importances_,
+                index=X.columns
+            ).sort_values(ascending=False)
+
+        return {
+            'train_report': train_report,
+            'validation_report': val_report,
+            'confusion_matrix': confusion_matrix(y_val, val_pred),
+            'feature_importance': feature_importance
+        }
+
+    def predict_signal(self, X: pd.DataFrame) -> np.ndarray:
+        """预测交易信号"""
+        if self.model is None:
+            raise ValueError("Model not trained yet")
+
+        return self.model.predict(X)
+
+    def predict_proba(self, X: pd.DataFrame) -> np.ndarray:
+        """预测概率分布"""
+        if self.model is None:
+            raise ValueError("Model not trained yet")
+
+        probabilities = self.model.predict_proba(X)
+        self.probability_history.extend(probabilities)
+        return probabilities
+
+    def predict_with_threshold(self, X: pd.DataFrame, threshold: float = 0.6) -> np.ndarray:
+        """使用阈值预测（仅高置信度预测）"""
+        probabilities = self.predict_proba(X)
+
+        # 找到最大概率及其对应的类别
+        max_probs = np.max(probabilities, axis=1)
+        predictions = np.argmax(probabilities, axis=1)
+
+        # 应用阈值
+        confident_predictions = np.where(
+            max_probs >= threshold,
+            predictions,
+            0  # 默认为持有
+        )
+
+        return confident_predictions
+
+    def get_signal_strength(self, X: pd.DataFrame) -> Dict:
+        """获取信号强度"""
+        probabilities = self.predict_proba(X)
+        predictions = self.predict_signal(X)
+        max_probs = np.max(probabilities, axis=1)
+
+        signal_strength = {}
+        for i, (pred, prob) in enumerate(zip(predictions, max_probs)):
+            signal_strength[i] = {
+                'signal': int(pred),
+                'confidence': float(prob),
+                'strength': self._calculate_strength(prob)
+            }
+
+        return signal_strength
+
+    def _calculate_strength(self, probability: float) -> str:
+        """计算信号强度"""
+        if probability > 0.8:
+            return 'very_strong'
+        elif probability > 0.7:
+            return 'strong'
+        elif probability > 0.6:
+            return 'moderate'
+        elif probability > 0.5:
+            return 'weak'
+        else:
+            return 'very_weak'
+```
+
+## 17.3 集成学习
+
+### 17.3.1 模型融合
+
+```python
+from sklearn.ensemble import VotingClassifier, StackingClassifier
+from sklearn.model_selection import cross_val_score
+import numpy as np
+
+class EnsembleModel:
+    """集成学习模型"""
+
+    def __init__(self, models: Dict, ensemble_method: str = 'voting'):
+        self.models = models
+        self.ensemble_method = ensemble_method
+        self.ensemble_model = None
+        self.model_weights = None
+
+    def create_voting_ensemble(self, voting: str = 'soft', weights: List[float] = None):
+        """创建投票集成模型"""
+        estimators = [(name, model) for name, model in self.models.items()]
+
+        self.ensemble_model = VotingClassifier(
+            estimators=estimators,
+            voting=voting,
+            weights=weights
+        )
+
+        self.model_weights = weights
+
+    def create_stacking_ensemble(self, meta_model=None, cv: int = 5):
+        """创建堆叠集成模型"""
+        estimators = [(name, model) for name, model in self.models.items()]
+
+        if meta_model is None:
+            from sklearn.linear_model import LogisticRegression
+            meta_model = LogisticRegression()
+
+        self.ensemble_model = StackingClassifier(
+            estimators=estimators,
+            final_estimator=meta_model,
+            cv=cv
+        )
+
+    def train(self, X: pd.DataFrame, y: pd.Series):
+        """训练集成模型"""
+        if self.ensemble_method == 'voting':
+            self.create_voting_ensemble()
+        elif self.ensemble_method == 'stacking':
+            self.create_stacking_ensemble()
+
+        self.ensemble_model.fit(X, y)
+
+        # 评估各个基础模型
+        individual_scores = {}
+        for name, model in self.models.items():
+            scores = cross_val_score(model, X, y, cv=5)
+            individual_scores[name] = {
+                'mean_score': scores.mean(),
+                'std_score': scores.std()
+            }
+
+        # 评估集成模型
+        ensemble_scores = cross_val_score(self.ensemble_model, X, y, cv=5)
+
+        return {
+            'individual_scores': individual_scores,
+            'ensemble_score': {
+                'mean_score': ensemble_scores.mean(),
+                'std_score': ensemble_scores.std()
+            }
+        }
+
+    def predict(self, X: pd.DataFrame) -> np.ndarray:
+        """预测"""
+        if self.ensemble_model is None:
+            raise ValueError("Ensemble model not trained yet")
+
+        return self.ensemble_model.predict(X)
+
+    def predict_proba(self, X: pd.DataFrame) -> np.ndarray:
+        """预测概率"""
+        if self.ensemble_model is None:
+            raise ValueError("Ensemble model not trained yet")
+
+        return self.ensemble_model.predict_proba(X)
+
+class AdaptiveEnsemble:
+    """自适应集成模型"""
+
+    def __init__(self, window_size: int = 100):
+        self.window_size = window_size
+        self.models = {}
+        self.model_performance = {}
+        self.current_weights = {}
+        self.performance_history = []
+
+    def add_model(self, name: str, model):
+        """添加模型"""
+        self.models[name] = model
+        self.model_performance[name] = []
+
+    def update_weights(self):
+        """更新模型权重"""
+        if not self.performance_history:
+            return
+
+        # 获取最近的性能
+        recent_performance = self.performance_history[-self.window_size:]
+
+        # 计算每个模型的平均性能
+        avg_performance = {}
+        for name in self.models.keys():
+            performances = [p[name] for p in recent_performance if name in p]
+            if performances:
+                avg_performance[name] = np.mean(performances)
+            else:
+                avg_performance[name] = 0
+
+        # 转换为权重
+        total_performance = sum(avg_performance.values())
+        if total_performance > 0:
+            self.current_weights = {
+                name: perf / total_performance
+                for name, perf in avg_performance.items()
+            }
+        else:
+            # 均等权重
+            n_models = len(self.models)
+            self.current_weights = {
+                name: 1.0 / n_models
+                for name in self.models.keys()
+            }
+
+    def predict(self, X: pd.DataFrame) -> np.ndarray:
+        """使用自适应权重预测"""
+        predictions = {}
+        weighted_predictions = np.zeros(len(X))
+
+        # 获取每个模型的预测
+        for name, model in self.models.items():
+            if hasattr(model, 'predict_proba'):
+                pred = model.predict_proba(X)
+                # 使用正类的概率
+                if pred.shape[1] == 2:
+                    pred = pred[:, 1]
+            else:
+                pred = model.predict(X)
+            predictions[name] = pred
+
+        # 加权平均
+        for name, pred in predictions.items():
+            weight = self.current_weights.get(name, 0)
+            weighted_predictions += pred * weight
+
+        return weighted_predictions
+
+    def evaluate_models(self, X: pd.DataFrame, y: pd.Series):
+        """评估模型性能"""
+        performance = {}
+
+        for name, model in self.models.items():
+            if hasattr(model, 'predict_proba'):
+                pred = model.predict_proba(X)
+                if pred.shape[1] == 2:
+                    pred = pred[:, 1]
+            else:
+                pred = model.predict(X)
+
+            # 计算准确率或其他指标
+            score = np.mean((pred > 0.5) == y)
+            performance[name] = score
+
+        self.performance_history.append(performance)
+        self.update_weights()
+
+        return performance
+```
+
+## 17.4 深度学习
+
+### 17.4.1 LSTM价格预测
+
+```python
+import torch
+import torch.nn as nn
+from torch.utils.data import Dataset, DataLoader
+from sklearn.preprocessing import MinMaxScaler
+
+class PriceDataset(Dataset):
+    """价格数据集"""
+
+    def __init__(self, data: np.ndarray, sequence_length: int, horizon: int = 1):
+        self.data = data
+        self.sequence_length = sequence_length
+        self.horizon = horizon
+
+    def __len__(self):
+        return len(self.data) - self.sequence_length - self.horizon + 1
+
+    def __getitem__(self, idx):
+        # 输入序列
+        x = self.data[idx:idx + self.sequence_length]
+
+        # 目标值（未来价格）
+        y = self.data[idx + self.sequence_length + self.horizon - 1]
+
+        return torch.FloatTensor(x), torch.FloatTensor([y])
+
+class LSTMPricePredictor(nn.Module):
+    """LSTM价格预测模型"""
+
+    def __init__(self, input_size: int, hidden_size: int = 64, num_layers: int = 2,
+                 dropout: float = 0.2, bidirectional: bool = False):
+        super().__init__()
+
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        self.bidirectional = bidirectional
+
+        # LSTM层
+        self.lstm = nn.LSTM(
+            input_size=input_size,
+            hidden_size=hidden_size,
+            num_layers=num_layers,
+            dropout=dropout if num_layers > 1 else 0,
+            batch_first=True,
+            bidirectional=bidirectional
+        )
+
+        # 全连接层
+        lstm_output_size = hidden_size * 2 if bidirectional else hidden_size
+        self.fc1 = nn.Linear(lstm_output_size, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, hidden_size // 2)
+        self.fc3 = nn.Linear(hidden_size // 2, 1)
+
+        # Dropout和激活函数
+        self.dropout = nn.Dropout(dropout)
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        # LSTM前向传播
+        lstm_out, (h_n, c_n) = self.lstm(x)
+
+        # 取最后一个时间步的输出
+        if self.bidirectional:
+            # 双向LSTM，连接前向和后向的最后输出
+            last_output = torch.cat([
+                lstm_out[:, -1, :self.hidden_size],
+                lstm_out[:, 0, self.hidden_size:]
+            ], dim=1)
+        else:
+            last_output = lstm_out[:, -1, :]
+
+        # 全连接层
+        out = self.relu(self.fc1(last_output))
+        out = self.dropout(out)
+        out = self.relu(self.fc2(out))
+        out = self.fc3(out)
+
+        return out
+
+class DeepLearningTrainer:
+    """深度学习模型训练器"""
+
+    def __init__(self, model: nn.Module, device: str = 'cuda'):
+        self.model = model.to(device)
+        self.device = device
+        self.optimizer = None
+        self.criterion = None
+        self.scheduler = None
+        self.training_history = []
+
+    def setup_training(self, learning_rate: float = 0.001, weight_decay: float = 1e-5):
+        """设置训练参数"""
+        self.optimizer = torch.optim.Adam(
+            self.model.parameters(),
+            lr=learning_rate,
+            weight_decay=weight_decay
+        )
+        self.criterion = nn.MSELoss()
+        self.scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            self.optimizer,
+            mode='min',
+            factor=0.5,
+            patience=10,
+            verbose=True
+        )
+
+    def train_epoch(self, dataloader: DataLoader) -> float:
+        """训练一个epoch"""
+        self.model.train()
+        total_loss = 0
+
+        for batch_idx, (x, y) in enumerate(dataloader):
+            x, y = x.to(self.device), y.to(self.device)
+
+            # 前向传播
+            self.optimizer.zero_grad()
+            output = self.model(x)
+            loss = self.criterion(output, y)
+
+            # 反向传播
+            loss.backward()
+
+            # 梯度裁剪
+            torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
+
+            self.optimizer.step()
+
+            total_loss += loss.item()
+
+            # 打印进度
+            if batch_idx % 100 == 0:
+                print(f'Batch {batch_idx}/{len(dataloader)}, Loss: {loss.item():.6f}')
+
+        return total_loss / len(dataloader)
+
+    def validate(self, dataloader: DataLoader) -> float:
+        """验证模型"""
+        self.model.eval()
+        total_loss = 0
+
+        with torch.no_grad():
+            for x, y in dataloader:
+                x, y = x.to(self.device), y.to(self.device)
+                output = self.model(x)
+                loss = self.criterion(output, y)
+                total_loss += loss.item()
+
+        return total_loss / len(dataloader)
+
+    def train(self, train_loader: DataLoader, val_loader: DataLoader,
+              epochs: int = 100, patience: int = 20):
+        """训练模型"""
+        best_val_loss = float('inf')
+        patience_counter = 0
+
+        for epoch in range(epochs):
+            # 训练
+            train_loss = self.train_epoch(train_loader)
+
+            # 验证
+            val_loss = self.validate(val_loader)
+
+            # 更新学习率
+            self.scheduler.step(val_loss)
+
+            # 记录历史
+            self.training_history.append({
+                'epoch': epoch,
+                'train_loss': train_loss,
+                'val_loss': val_loss,
+                'learning_rate': self.optimizer.param_groups[0]['lr']
+            })
+
+            # 早停
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                patience_counter = 0
+                # 保存最佳模型
+                torch.save(self.model.state_dict(), 'best_model.pth')
+            else:
+                patience_counter += 1
+
+            print(f'Epoch {epoch}: Train Loss = {train_loss:.6f}, Val Loss = {val_loss:.6f}')
+
+            if patience_counter >= patience:
+                print(f'Early stopping at epoch {epoch}')
+                break
+
+        # 加载最佳模型
+        self.model.load_state_dict(torch.load('best_model.pth'))
+
+    def predict(self, dataloader: DataLoader) -> np.ndarray:
+        """预测"""
+        self.model.eval()
+        predictions = []
+
+        with torch.no_grad():
+            for x, _ in dataloader:
+                x = x.to(self.device)
+                output = self.model(x)
+                predictions.extend(output.cpu().numpy())
+
+        return np.array(predictions)
+
+    def save_model(self, filepath: str):
+        """保存模型"""
+        torch.save({
+            'model_state_dict': self.model.state_dict(),
+            'optimizer_state_dict': self.optimizer.state_dict(),
+            'training_history': self.training_history
+        }, filepath)
+
+    def load_model(self, filepath: str):
+        """加载模型"""
+        checkpoint = torch.load(filepath, map_location=self.device)
+        self.model.load_state_dict(checkpoint['model_state_dict'])
+        self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+        self.training_history = checkpoint.get('training_history', [])
+```
+
+## 17.5 在线学习
+
+### 17.5.1 增量学习
+
+```python
+from sklearn.base import BaseEstimator
+import joblib
+import pickle
+
+class OnlineLearningModel:
+    """在线学习模型"""
+
+    def __init__(self, model, update_frequency: int = 100, decay_factor: float = 0.95):
+        self.model = model
+        self.update_frequency = update_frequency
+        self.decay_factor = decay_factor
+        self.training_samples = 0
+        self.performance_window = []
+        self.last_update_time = None
+
+    def partial_fit(self, X: pd.DataFrame, y: pd.Series):
+        """增量拟合"""
+        # 支持增量学习的模型
+        if hasattr(self.model, 'partial_fit'):
+            self.model.partial_fit(X, y)
+        else:
+            # 对于不支持增量学习的模型，需要特殊处理
+            self._batch_update(X, y)
+
+        self.training_samples += len(X)
+        self.last_update_time = pd.Timestamp.now()
+
+    def _batch_update(self, X: pd.DataFrame, y: pd.Series):
+        """批量更新（用于不支持增量学习的模型）"""
+        # 保存部分历史数据
+        if not hasattr(self, 'historical_X'):
+            self.historical_X = X
+            self.historical_y = y
+        else:
+            # 限制历史数据大小
+            max_samples = 10000
+            if len(self.historical_X) > max_samples:
+                self.historical_X = self.historical_X.iloc[-max_samples:]
+                self.historical_y = self.historical_y.iloc[-max_samples:]
+
+            # 添加新数据
+            self.historical_X = pd.concat([self.historical_X, X], ignore_index=True)
+            self.historical_y = pd.concat([self.historical_y, y], ignore_index=True)
+
+            # 重新训练
+            self.model.fit(self.historical_X, self.historical_y)
+
+    def predict(self, X: pd.DataFrame) -> np.ndarray:
+        """预测"""
+        return self.model.predict(X)
+
+    def evaluate_and_update(self, X: pd.DataFrame, y: pd.Series, threshold: float = 0.1):
+        """评估并决定是否更新"""
+        predictions = self.predict(X)
+
+        # 计算性能指标
+        if hasattr(self.model, 'score'):
+            score = self.model.score(X, y)
+        else:
+            # 自定义评分
+            score = np.mean((predictions - y) ** 2)
+
+        self.performance_window.append(score)
+
+        # 保持固定窗口大小
+        if len(self.performance_window) > 10:
+            self.performance_window.pop(0)
+
+        # 如果性能下降，更新模型
+        if len(self.performance_window) >= 2:
+            if self.performance_window[-1] > self.performance_window[-2] * (1 + threshold):
+                self.partial_fit(X, y)
+                return True
+
+        # 定期更新
+        if self.training_samples % self.update_frequency == 0:
+            self.partial_fit(X, y)
+            return True
+
+        return False
+
+    def save_state(self, filepath: str):
+        """保存模型状态"""
+        state = {
+            'model': self.model,
+            'training_samples': self.training_samples,
+            'performance_window': self.performance_window,
+            'last_update_time': self.last_update_time
+        }
+        with open(filepath, 'wb') as f:
+            pickle.dump(state, f)
+
+    def load_state(self, filepath: str):
+        """加载模型状态"""
+        with open(filepath, 'rb') as f:
+            state = pickle.load(f)
+
+        self.model = state['model']
+        self.training_samples = state['training_samples']
+        self.performance_window = state['performance_window']
+        self.last_update_time = state['last_update_time']
+
+class ConceptDriftDetector:
+    """概念漂移检测器"""
+
+    def __init__(self, window_size: int = 1000, threshold: float = 2.0):
+        self.window_size = window_size
+        self.threshold = threshold
+        self.reference_distribution = None
+        self.current_window = []
+        self.drift_detected = False
+
+    def add_sample(self, sample):
+        """添加新样本"""
+        self.current_window.append(sample)
+
+        if len(self.current_window) > self.window_size:
+            self.current_window.pop(0)
+
+    def detect_drift(self) -> bool:
+        """检测概念漂移"""
+        if len(self.current_window) < self.window_size:
+            return False
+
+        if self.reference_distribution is None:
+            # 设置参考分布
+            self.reference_distribution = np.array(self.current_window)
+            return False
+
+        # 使用Kolmogorov-Smirnov测试检测分布变化
+        from scipy import stats
+        statistic, p_value = stats.ks_2samp(
+            self.reference_distribution,
+            self.current_window
+        )
+
+        # 如果p值很小，认为发生漂移
+        if p_value < 0.05:
+            self.drift_detected = True
+            return True
+
+        return False
+
+    def reset_reference(self):
+        """重置参考分布"""
+        if self.current_window:
+            self.reference_distribution = np.array(self.current_window)
+            self.drift_detected = False
+```
+
+## 小结
+
+本章深入探讨了机器学习和AI在量化交易中的应用，涵盖了：
+
+1. **特征工程**
+   - 价格特征提取
+   - 技术指标计算
+   - 时间序列特征
+   - 实时特征处理
+
+2. **预测模型**
+   - 回归模型
+   - 分类模型
+   - 模型评估和选择
+
+3. **集成学习**
+   - 投票集成
+   - 堆叠集成
+   - 自适应权重
+
+4. **深度学习**
+   - LSTM模型
+   - 训练技巧
+   - 模型部署
+
+5. **在线学习**
+   - 增量学习
+   - 概念漂移检测
+   - 模型更新策略
+
+通过本章的学习，读者可以构建完整的机器学习交易系统，实现数据驱动的智能交易决策。
+
+## 参考资料
+
+- [Advances in Financial Machine Learning](https://www.wiley.com/en-us/Advances+in+Financial+Machine+Learning)
+- [Machine Learning for Algorithmic Trading](https://www.packtpub.com/product/machine-learning-for-algorithmic-trading/9781789138999)
+- [Deep Learning for Time Series Forecasting](https://www.oreilly.com/library/view/deep-learning-for/9781492048316/)
+## 本章可运行代码入口（源码版）
+
+- 入口脚本：`docs/tutorials_cn/code/chapter17/run_ml_trading.py`
+- 关键示例：`docs/tutorials_cn/code/chapter17/supervised_learning.py`、`docs/tutorials_cn/code/chapter17/unsupervised_learning.py`、`docs/tutorials_cn/code/chapter17/reinforcement_learning.py`
+
+依赖策略说明：默认使用无重依赖路径；`sklearn/torch` 仅在可用时启用增强能力。
+
+已验证命令：
+
+```bash
+uv run --python 3.13 python docs/tutorials_cn/code/chapter17/run_ml_trading.py
+```

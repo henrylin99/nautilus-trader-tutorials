@@ -1,0 +1,97 @@
+site_name: NautilusTrader 实战教程
+site_description: NautilusTrader 量化交易框架系统教程（中英双语）— 从安装入门到实盘部署
+site_url: https://henrylin99.github.io/nautilus-trader-tutorials/
+repo_url: https://github.com/henrylin99/nautilus-trader-tutorials
+repo_name: henrylin99/nautilus-trader-tutorials
+copyright: © 2026 NautilusTrader 实战教程 · 仅供学习交流，不构成投资建议
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: teal
+      toggle:
+        icon: material/brightness-7
+        name: 切换深色模式
+    - scheme: slate
+      primary: teal
+      toggle:
+        icon: material/brightness-4
+        name: 切换浅色模式
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.tabbed
+  - tables
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - i18n:
+      docs_structure: folder
+      languages:
+        - locale: zh
+          name: 中文
+          default: true
+          build: true
+        - locale: en
+          name: English
+          build: true
+
+nav:
+  - '🇨🇳 中文教程':
+    - '第1章：NautilusTrader 简介': zh/01-introduction.md
+    - '第2章：环境搭建与安装': zh/02-installation.md
+    - '第3章：快速开始': zh/03-quickstart.md
+    - '第4章：数据导入与处理': zh/04-data-import.md
+    - '第5章：基础回测引擎使用': zh/05-backtest-engine.md
+    - '第6章：时间管理和事件处理': zh/06-time-events.md
+    - '第7章：技术指标系统': zh/07-indicators.md
+    - '第8章：订单管理系统': zh/08-order-management.md
+    - '第9章：投资组合与风险管理': zh/09-portfolio-risk.md
+    - '第10章：高级数据处理': zh/10-advanced-data.md
+    - '第11章：消息传递与Actor模型': zh/11-message-actor.md
+    - '第12章：性能优化': zh/12-performance-optimization.md
+    - '第13章：实盘交易架构': zh/13-live-trading-architecture.md
+    - '第14章：交易所集成': zh/14-exchange-integration.md
+    - '第15章：实盘策略部署': zh/15-live-strategy-deployment.md
+    - '第16章：算法交易策略': zh/16-algorithmic-trading-strategies.md
+    - '第17章：机器学习和AI': zh/17-machine-learning-ai.md
+    - '第18章：自定义组件开发': zh/18-custom-component-development.md
+    - '第19章：完整项目示例1：加密货币做市策略': zh/19-complete-project-example-1.md
+    - '第20章：完整项目示例2：多策略量化基金': zh/20-complete-project-example-2.md
+    - 'NautilusTrader 中文教程': zh/README.md
+  - '🇬🇧 English Tutorials':
+    - 'Chapter 1: Introduction to NautilusTrader': en/01-introduction.md
+    - 'Chapter 2: Environment Setup and Installation': en/02-installation.md
+    - 'Chapter 3: Quick Start': en/03-quickstart.md
+    - 'Chapter 4: Data Import and Processing (Part 1)': en/04-data-import.md
+    - 'Chapter 5: Basic Backtest Engine Usage': en/05-backtest-engine.md
+    - 'Chapter 6: Time Management and Event Handling': en/06-time-events.md
+    - 'Chapter 7: Technical Indicators System': en/07-indicators.md
+    - 'Chapter 8: Order Management System': en/08-order-management.md
+    - 'Chapter 9: Portfolio and Risk Management': en/09-portfolio-risk.md
+    - 'Chapter 10: Advanced Data Processing': en/10-advanced-data.md
+    - 'Chapter 11: Message Passing and Actor Model': en/11-message-actor.md
+    - 'Chapter 12: Performance Optimization': en/12-performance-optimization.md
+    - 'Chapter 13: Live Trading Architecture': en/13-live-trading-architecture.md
+    - 'Chapter 14: Exchange Integration': en/14-exchange-integration.md
+    - 'Chapter 15: Live Strategy Deployment': en/15-live-strategy-deployment.md
+    - 'Chapter 16: Algorithmic Trading Strategies': en/16-algorithmic-trading-strategies.md
+    - 'Chapter 17: Machine Learning and AI': en/17-machine-learning-ai.md
+    - 'Chapter 18: Custom Component Development': en/18-custom-component-development.md
+    - 'Chapter 19: Complete Project Example 1 - Cryptocurrency Market Making Strategy': en/19-complete-project-example-1.md
+    - 'Chapter 20: Complete Project Example 2 - Multi-Strategy Quantitative Fund': en/20-complete-project-example-2.md
+    - 'NautilusTrader English Tutorials': en/README.md
