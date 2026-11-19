@@ -1,6 +1,21 @@
+!!! info "English"
+    Click the link to switch to the English version: **[NautilusTrader Practical Tutorials →](en/)**
+
 # NautilusTrader 实战教程
 
 NautilusTrader 高性能算法交易框架的系统教程——从安装入门、回测引擎、指标与订单管理，到实盘架构与完整项目实战。
+
+## 🚀 从这里开始
+
+| 我要… | 直接点这里 |
+|------|------|
+| 系统地从头学 | **[第 1 章：NautilusTrader 简介 →](01-introduction/)** |
+| 马上安装跑起来 | **[第 2 章：环境搭建与安装 →](02-installation/)** |
+| 跑第一个回测 | **[第 3 章：快速开始 →](03-quickstart/)** |
+| 学写策略 | **[第 16 章：算法交易策略 →](16-algorithmic-trading-strategies/)** |
+| 看完整项目 | **[第 19 章：加密货币做市策略 →](19-complete-project-example-1/)** |
+
+> 📖 **全部 21 章在左侧目录**，由浅入深，可按顺序读也可按需跳读。
 
 ## 学习路径
 
@@ -14,5 +29,3 @@ NautilusTrader 高性能算法交易框架的系统教程——从安装入门�
 | 综合 | 第 19–21 章 | 完整项目实战两例与总结 |
 
 > 📌 站点仅包含教程正文；配套示例代码请参见源仓库。
-
-点击顶部语言按钮切换 [English](en/) 版本。
