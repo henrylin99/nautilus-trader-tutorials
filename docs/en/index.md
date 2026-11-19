@@ -1,5 +1,9 @@
+---
+title: NautilusTrader Practical Tutorials
+---
+
 !!! info "中文"
-    点击链接，切换到中文版本：**[NautilusTrader 实战教程 →](../)**
+    点击链接，切换到中文版本：**[NautilusTrader 实战教程 →](/nautilus-trader-tutorials/)**
 
 # NautilusTrader Practical Tutorials
 
