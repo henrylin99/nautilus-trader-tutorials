@@ -15,4 +15,4 @@ A systematic tutorial series for the NautilusTrader high-performance algorithmic
 
 > 📌 This site contains tutorial text only; companion example code lives in the source repository.
 
-Switch to the [中文版](../zh/) via the language selector at the top.
+Switch to the [中文版](../) via the language selector at the top.
