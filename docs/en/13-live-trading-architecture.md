@@ -1,3 +1,7 @@
+---
+title: "Chapter 13: Live Trading Architecture"
+---
+
 # Chapter 13: Live Trading Architecture
 
 ## Learning Objectives

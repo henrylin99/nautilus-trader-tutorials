@@ -1,3 +1,7 @@
+---
+title: "Chapter 6: Time Management and Event Handling"
+---
+
 # Chapter 6: Time Management and Event Handling
 
 ## Learning Objectives

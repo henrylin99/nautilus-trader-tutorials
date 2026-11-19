@@ -1,3 +1,7 @@
+---
+title: "Chapter 16: Algorithmic Trading Strategies"
+---
+
 # Chapter 16: Algorithmic Trading Strategies
 
 ## Learning Objectives

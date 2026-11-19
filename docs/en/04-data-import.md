@@ -1,3 +1,7 @@
+---
+title: "Chapter 4: Data Import and Processing (Part 1)"
+---
+
 # Chapter 4: Data Import and Processing (Part 1)
 
 ## Learning Objectives

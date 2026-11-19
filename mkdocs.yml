@@ -49,6 +49,28 @@ plugins:
         - locale: en
           name: English
           build: true
+          nav_translations:
+            中文教程: "English Tutorials"
+            第1章：NautilusTrader 简介: "Chapter 1: Introduction to NautilusTrader"
+            第2章：环境搭建与安装: "Chapter 2: Environment Setup and Installation"
+            第3章：快速开始: "Chapter 3: Quick Start"
+            第4章：数据导入与处理: "Chapter 4: Data Import and Processing"
+            第5章：基础回测引擎使用: "Chapter 5: Basic Backtest Engine Usage"
+            第6章：时间管理和事件处理: "Chapter 6: Time Management and Event Handling"
+            第7章：技术指标系统: "Chapter 7: Technical Indicators System"
+            第8章：订单管理系统: "Chapter 8: Order Management System"
+            第9章：投资组合与风险管理: "Chapter 9: Portfolio and Risk Management"
+            第10章：高级数据处理: "Chapter 10: Advanced Data Processing"
+            第11章：消息传递与Actor模型: "Chapter 11: Messaging and the Actor Model"
+            第12章：性能优化: "Chapter 12: Performance Optimization"
+            第13章：实盘交易架构: "Chapter 13: Live Trading Architecture"
+            第14章：交易所集成: "Chapter 14: Exchange Integration"
+            第15章：实盘策略部署: "Chapter 15: Live Strategy Deployment"
+            第16章：算法交易策略: "Chapter 16: Algorithmic Trading Strategies"
+            第17章：机器学习和AI: "Chapter 17: Machine Learning and AI"
+            第18章：自定义组件开发: "Chapter 18: Custom Component Development"
+            第19章：完整项目示例1：加密货币做市策略: "Chapter 19: Complete Project Example 1: Crypto Market Making"
+            第20章：完整项目示例2：多策略量化基金: "Chapter 20: Complete Project Example 2: Multi-Strategy Quant Fund"
 
 nav:
   - '🇨🇳 中文教程':

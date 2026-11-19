@@ -1,3 +1,7 @@
+---
+title: "Chapter 7: Technical Indicators System"
+---
+
 # Chapter 7: Technical Indicators System
 
 ## Learning Objectives

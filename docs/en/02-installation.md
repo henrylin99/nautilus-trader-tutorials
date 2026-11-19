@@ -1,3 +1,7 @@
+---
+title: "Chapter 2: Environment Setup and Installation"
+---
+
 # Chapter 2: Environment Setup and Installation
 
 ## Learning Objectives

@@ -1,3 +1,7 @@
+---
+title: "Chapter 10: Advanced Data Processing"
+---
+
 # Chapter 10: Advanced Data Processing
 
 ## Learning Objectives

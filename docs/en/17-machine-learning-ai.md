@@ -1,3 +1,7 @@
+---
+title: "Chapter 17: Machine Learning and AI"
+---
+
 # Chapter 17: Machine Learning and AI
 
 ## Learning Objectives

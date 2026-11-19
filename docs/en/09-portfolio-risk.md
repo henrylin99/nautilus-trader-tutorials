@@ -1,3 +1,7 @@
+---
+title: "Chapter 9: Portfolio and Risk Management"
+---
+
 # Chapter 9: Portfolio and Risk Management
 
 ## Learning Objectives

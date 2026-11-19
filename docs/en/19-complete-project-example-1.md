@@ -1,3 +1,7 @@
+---
+title: "Chapter 19: Complete Project Example 1 - Cryptocurrency Market Making Strategy"
+---
+
 # Chapter 19: Complete Project Example 1 - Cryptocurrency Market Making Strategy
 
 ## Learning Objectives

@@ -1,3 +1,7 @@
+---
+title: "Chapter 12: Performance Optimization"
+---
+
 # Chapter 12: Performance Optimization
 
 ## Learning Objectives

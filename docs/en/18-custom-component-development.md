@@ -1,3 +1,7 @@
+---
+title: "Chapter 18: Custom Component Development"
+---
+
 # Chapter 18: Custom Component Development
 
 ## Learning Objectives

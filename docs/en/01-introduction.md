@@ -1,3 +1,7 @@
+---
+title: "Chapter 1: Introduction to NautilusTrader"
+---
+
 # Chapter 1: Introduction to NautilusTrader
 
 ## Learning Objectives

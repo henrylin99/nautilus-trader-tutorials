@@ -1,3 +1,7 @@
+---
+title: "Chapter 3: Quick Start"
+---
+
 # Chapter 3: Quick Start
 
 ## Learning Objectives

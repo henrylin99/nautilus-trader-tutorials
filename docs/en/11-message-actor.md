@@ -1,3 +1,7 @@
+---
+title: "Chapter 11: Message Passing and Actor Model"
+---
+
 # Chapter 11: Message Passing and Actor Model
 
 ## Learning Objectives

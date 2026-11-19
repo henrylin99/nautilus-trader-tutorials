@@ -1,3 +1,7 @@
+---
+title: "Chapter 15: Live Strategy Deployment"
+---
+
 # Chapter 15: Live Strategy Deployment
 
 ## Learning Objectives

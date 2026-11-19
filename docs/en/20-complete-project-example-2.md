@@ -1,3 +1,7 @@
+---
+title: "Chapter 20: Complete Project Example 2 - Multi-Strategy Quantitative Fund"
+---
+
 # Chapter 20: Complete Project Example 2 - Multi-Strategy Quantitative Fund
 
 ## Learning Objectives
