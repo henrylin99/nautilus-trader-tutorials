@@ -9,11 +9,11 @@ A systematic tutorial series for the NautilusTrader high-performance algorithmic
 
 | I want to… | Go to |
 |------|------|
-| Learn systematically from the beginning | **[Chapter 1: Introduction to NautilusTrader →](../01-introduction/)** |
-| Install and get running | **[Chapter 2: Environment Setup →](../02-installation/)** |
-| Run my first backtest | **[Chapter 3: Quick Start →](../03-quickstart/)** |
-| Learn to write strategies | **[Chapter 16: Algorithmic Trading Strategies →](../16-algorithmic-trading-strategies/)** |
-| See a complete project | **[Chapter 19: Crypto Market Making →](../19-complete-project-example-1/)** |
+| Learn systematically from the beginning | **[Chapter 1: Introduction to NautilusTrader →](01-introduction/)** |
+| Install and get running | **[Chapter 2: Environment Setup →](02-installation/)** |
+| Run my first backtest | **[Chapter 3: Quick Start →](03-quickstart/)** |
+| Learn to write strategies | **[Chapter 16: Algorithmic Trading Strategies →](16-algorithmic-trading-strategies/)** |
+| See a complete project | **[Chapter 19: Crypto Market Making →](19-complete-project-example-1/)** |
 
 > 📖 **All 21 chapters are in the left sidebar**, from beginner to advanced.
 
