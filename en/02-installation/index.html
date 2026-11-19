@@ -1,0 +1,3183 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="NautilusTrader 量化交易框架系统教程（中英双语）— 从安装入门到实盘部署">
+      
+      
+      
+        <link rel="canonical" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/02-installation/">
+      
+      
+        <link rel="prev" href="../01-introduction/">
+      
+      
+        <link rel="next" href="../03-quickstart/">
+      
+      
+        
+          <link rel="alternate" href="../../02-installation/" hreflang="zh">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Chapter 2: Environment Setup and Installation - NautilusTrader 实战教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9784658154228475"
+     crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VGHZY4EELE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-VGHZY4EELE");
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-2-environment-setup-and-installation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="NautilusTrader 实战教程" class="md-header__button md-logo" aria-label="NautilusTrader 实战教程" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NautilusTrader 实战教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 2: Environment Setup and Installation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="切换深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="切换浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../02-installation/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/henrylin99/nautilus-trader-tutorials" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    henrylin99/nautilus-trader-tutorials
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+  
+  English Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="NautilusTrader 实战教程" class="md-nav__button md-logo" aria-label="NautilusTrader 实战教程" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    NautilusTrader 实战教程
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/henrylin99/nautilus-trader-tutorials" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    henrylin99/nautilus-trader-tutorials
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    English Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    English Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1: Introduction to NautilusTrader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2: Environment Setup and Installation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2: Environment Setup and Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 System Requirements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 System Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operating-system-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operating System Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-version-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python Version Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware Requirements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardware Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minimum-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimum Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional Dependencies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#redis-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Redis (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-python-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Python Environment Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Python Environment Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-using-pyenv-to-manage-python-versions-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.1 Using pyenv to Manage Python Versions (Recommended)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.1 Using pyenv to Manage Python Versions (Recommended)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-pyenv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing pyenv
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-python-312" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing Python 3.12
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-using-uv-package-manager-highly-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.2 Using uv Package Manager (Highly Recommended)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.2 Using uv Package Manager (Highly Recommended)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing uv
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-virtual-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Virtual Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-installing-nautilustrader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Installing NautilusTrader
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Installing NautilusTrader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231-method-1-install-from-pypi-easiest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 Method 1: Install from PyPI (Easiest)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.1 Method 1: Install from PyPI (Easiest)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-specific-integrations-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing Specific Integrations (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232-method-2-install-from-nautech-systems-package-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.2 Method 2: Install from Nautech Systems Package Index
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.2 Method 2: Install from Nautech Systems Package Index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stable-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stable Version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development Version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specific-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specific Version
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#233-method-3-build-from-source-developers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.3 Method 3: Build from Source (Developers)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.3 Method 3: Build from Source (Developers)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-build-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing Build Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clone-and-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clone and Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build and Install
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#234-method-4-using-docker-containerization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.4 Method 4: Using Docker (Containerization)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.4 Method 4: Using Docker (Containerization)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pull-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull Image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dockerfile-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dockerfile Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-development-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Development Environment Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Development Environment Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241-ide-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.1 IDE Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4.1 IDE Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs-code-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VS Code Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pycharm-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyCharm Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242-code-formatting-and-quality-checking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.2 Code Formatting and Quality Checking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#243-git-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.3 Git Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-common-issues-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Common Issues and Solutions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5 Common Issues and Solutions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-1-python-version-incompatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 1: Python Version Incompatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-2-compilation-error-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 2: Compilation Error (Linux)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-3-insufficient-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 3: Insufficient Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-4-network-issues-chinese-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 4: Network Issues (Chinese Users)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-5-permission-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 5: Permission Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-verifying-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Verifying Installation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6 Verifying Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-test-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create Test Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expected-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.8 Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#29-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.9 References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 3: Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-data-import/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 4: Data Import and Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-backtest-engine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 5: Basic Backtest Engine Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-time-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 6: Time Management and Event Handling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-indicators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 7: Technical Indicators System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-order-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 8: Order Management System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-portfolio-risk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 9: Portfolio and Risk Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-advanced-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 10: Advanced Data Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-message-actor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 11: Messaging and the Actor Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-performance-optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 12: Performance Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-live-trading-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 13: Live Trading Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-exchange-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 14: Exchange Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-live-strategy-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 15: Live Strategy Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-algorithmic-trading-strategies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 16: Algorithmic Trading Strategies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-machine-learning-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 17: Machine Learning and AI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-custom-component-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 18: Custom Component Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-complete-project-example-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 19: Complete Project Example 1: Crypto Market Making
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-complete-project-example-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 20: Complete Project Example 2: Multi-Strategy Quant Fund
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 System Requirements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 System Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operating-system-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operating System Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-version-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python Version Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware Requirements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardware Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minimum-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimum Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional Dependencies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#redis-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Redis (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-python-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Python Environment Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Python Environment Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-using-pyenv-to-manage-python-versions-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.1 Using pyenv to Manage Python Versions (Recommended)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.1 Using pyenv to Manage Python Versions (Recommended)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-pyenv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing pyenv
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-python-312" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing Python 3.12
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-using-uv-package-manager-highly-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.2 Using uv Package Manager (Highly Recommended)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.2 Using uv Package Manager (Highly Recommended)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing uv
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-virtual-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Virtual Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-installing-nautilustrader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Installing NautilusTrader
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Installing NautilusTrader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231-method-1-install-from-pypi-easiest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 Method 1: Install from PyPI (Easiest)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.1 Method 1: Install from PyPI (Easiest)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-specific-integrations-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing Specific Integrations (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232-method-2-install-from-nautech-systems-package-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.2 Method 2: Install from Nautech Systems Package Index
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.2 Method 2: Install from Nautech Systems Package Index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stable-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stable Version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development Version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specific-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specific Version
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#233-method-3-build-from-source-developers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.3 Method 3: Build from Source (Developers)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.3 Method 3: Build from Source (Developers)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-build-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing Build Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clone-and-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clone and Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build and Install
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#234-method-4-using-docker-containerization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.4 Method 4: Using Docker (Containerization)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.4 Method 4: Using Docker (Containerization)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pull-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull Image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dockerfile-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dockerfile Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-development-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Development Environment Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Development Environment Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241-ide-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.1 IDE Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4.1 IDE Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs-code-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VS Code Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pycharm-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyCharm Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242-code-formatting-and-quality-checking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.2 Code Formatting and Quality Checking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#243-git-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.3 Git Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-common-issues-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Common Issues and Solutions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5 Common Issues and Solutions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-1-python-version-incompatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 1: Python Version Incompatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-2-compilation-error-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 2: Compilation Error (Linux)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-3-insufficient-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 3: Insufficient Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-4-network-issues-chinese-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 4: Network Issues (Chinese Users)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-5-permission-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 5: Permission Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-verifying-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Verifying Installation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6 Verifying Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-test-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create Test Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expected-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.8 Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#29-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.9 References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="chapter-2-environment-setup-and-installation">Chapter 2: Environment Setup and Installation<a class="headerlink" href="#chapter-2-environment-setup-and-installation" title="Permanent link">&para;</a></h1>
+<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
+<p>After completing this chapter, you will:
+- Understand NautilusTrader's system requirements and dependencies
+- Master Python environment configuration methods
+- Learn to install NautilusTrader from different sources
+- Solve common installation issues
+- Configure an appropriate development environment</p>
+<h2 id="21-system-requirements">2.1 System Requirements<a class="headerlink" href="#21-system-requirements" title="Permanent link">&para;</a></h2>
+<h3 id="operating-system-support">Operating System Support<a class="headerlink" href="#operating-system-support" title="Permanent link">&para;</a></h3>
+<p>NautilusTrader supports the following operating systems:</p>
+<table>
+<thead>
+<tr>
+<th>Operating System</th>
+<th>Architecture</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td>x86_64</td>
+<td>✓ Fully supported</td>
+<td>Recommended, best performance</td>
+</tr>
+<tr>
+<td>Linux</td>
+<td>ARM64</td>
+<td>✓ Fully supported</td>
+<td>For ARM servers</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td>ARM64 (Apple Silicon)</td>
+<td>✓ Fully supported</td>
+<td>Recommended for M1/M2/M3 chips</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td>x86_64</td>
+<td>✓ Supported</td>
+<td>For Intel chips</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>x86_64</td>
+<td>✓ Supported</td>
+<td>64-bit Windows 10/11</td>
+</tr>
+</tbody>
+</table>
+<h3 id="python-version-requirements">Python Version Requirements<a class="headerlink" href="#python-version-requirements" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Minimum requirement</strong>: Python 3.12</li>
+<li><strong>Recommended version</strong>: Python 3.12 - 3.14</li>
+<li><strong>Not supported</strong>: Python &lt; 3.12</li>
+</ul>
+<h3 id="hardware-requirements">Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permanent link">&para;</a></h3>
+<h4 id="minimum-configuration">Minimum Configuration<a class="headerlink" href="#minimum-configuration" title="Permanent link">&para;</a></h4>
+<ul>
+<li>CPU: Dual-core 2GHz</li>
+<li>Memory: 4GB RAM</li>
+<li>Storage: 10GB available space</li>
+<li>Network: Stable internet connection</li>
+</ul>
+<h4 id="recommended-configuration">Recommended Configuration<a class="headerlink" href="#recommended-configuration" title="Permanent link">&para;</a></h4>
+<ul>
+<li>CPU: Quad-core 3GHz+</li>
+<li>Memory: 16GB+ RAM</li>
+<li>Storage: 50GB+ SSD</li>
+<li>Network: Low-latency connection (&lt; 50ms)</li>
+</ul>
+<h4 id="production-environment">Production Environment<a class="headerlink" href="#production-environment" title="Permanent link">&para;</a></h4>
+<ul>
+<li>CPU: Octa-core 3GHz+</li>
+<li>Memory: 32GB+ RAM</li>
+<li>Storage: 500GB+ NVMe SSD</li>
+<li>Network: Dedicated line, latency &lt; 10ms</li>
+</ul>
+<h3 id="optional-dependencies">Optional Dependencies<a class="headerlink" href="#optional-dependencies" title="Permanent link">&para;</a></h3>
+<h4 id="redis-optional">Redis (Optional)<a class="headerlink" href="#redis-optional" title="Permanent link">&para;</a></h4>
+<p>For caching and message bus persistence:
+<div class="highlight"><pre><span></span><code><span class="c1"># Ubuntu/Debian</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>redis-server
+
+<span class="c1"># macOS (using Homebrew)</span>
+brew<span class="w"> </span>install<span class="w"> </span>redis
+
+<span class="c1"># Windows</span>
+<span class="c1"># Download and install Redis for Windows</span>
+</code></pre></div></p>
+<h4 id="docker-optional">Docker (Optional)<a class="headerlink" href="#docker-optional" title="Permanent link">&para;</a></h4>
+<p>For containerized deployment:
+<div class="highlight"><pre><span></span><code><span class="c1"># Install Docker Desktop</span>
+<span class="c1"># https://www.docker.com/products/docker-desktop</span>
+</code></pre></div></p>
+<h2 id="22-python-environment-configuration">2.2 Python Environment Configuration<a class="headerlink" href="#22-python-environment-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="221-using-pyenv-to-manage-python-versions-recommended">2.2.1 Using pyenv to Manage Python Versions (Recommended)<a class="headerlink" href="#221-using-pyenv-to-manage-python-versions-recommended" title="Permanent link">&para;</a></h3>
+<p>pyenv is a Python version management tool that allows easy switching between different Python versions.</p>
+<h4 id="installing-pyenv">Installing pyenv<a class="headerlink" href="#installing-pyenv" title="Permanent link">&para;</a></h4>
+<p><strong>macOS:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install using Homebrew</span>
+brew<span class="w"> </span>install<span class="w"> </span>pyenv
+
+<span class="c1"># Add to shell configuration file</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">'export PYENV_ROOT="$HOME/.pyenv"'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+<span class="nb">echo</span><span class="w"> </span><span class="s1">'command -v pyenv &gt;/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+<span class="nb">echo</span><span class="w"> </span><span class="s1">'eval "$(pyenv init -)"'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+
+<span class="c1"># Reload configuration</span>
+<span class="nb">source</span><span class="w"> </span>~/.zshrc
+</code></pre></div></p>
+<p><strong>Linux:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install dependencies</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>make<span class="w"> </span>build-essential<span class="w"> </span>libssl-dev<span class="w"> </span>zlib1g-dev<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>libbz2-dev<span class="w"> </span>libreadline-dev<span class="w"> </span>libsqlite3-dev<span class="w"> </span>wget<span class="w"> </span>curl<span class="w"> </span>llvm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>libncurses5-dev<span class="w"> </span>libncursesw5-dev<span class="w"> </span>xz-utils<span class="w"> </span>tk-dev
+
+<span class="c1"># Clone pyenv repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/pyenv/pyenv.git<span class="w"> </span>~/.pyenv
+
+<span class="c1"># Add to shell configuration</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">'export PYENV_ROOT="$HOME/.pyenv"'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<span class="nb">echo</span><span class="w"> </span><span class="s1">'command -v pyenv &gt;/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<span class="nb">echo</span><span class="w"> </span><span class="s1">'eval "$(pyenv init -)"'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+
+<span class="c1"># Reload configuration</span>
+<span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div></p>
+<h4 id="installing-python-312">Installing Python 3.12<a class="headerlink" href="#installing-python-312" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># List available versions</span>
+pyenv<span class="w"> </span>install<span class="w"> </span>--list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"3.12"</span>
+
+<span class="c1"># Install Python 3.12</span>
+pyenv<span class="w"> </span>install<span class="w"> </span><span class="m">3</span>.12.7
+
+<span class="c1"># Set global default version</span>
+pyenv<span class="w"> </span>global<span class="w"> </span><span class="m">3</span>.12.7
+
+<span class="c1"># Verify installation</span>
+python<span class="w"> </span>--version
+<span class="c1"># Python 3.12.7</span>
+</code></pre></div>
+<h3 id="222-using-uv-package-manager-highly-recommended">2.2.2 Using uv Package Manager (Highly Recommended)<a class="headerlink" href="#222-using-uv-package-manager-highly-recommended" title="Permanent link">&para;</a></h3>
+<p>uv is an extremely fast Python package manager, 10-100x faster than pip.</p>
+<h4 id="installing-uv">Installing uv<a class="headerlink" href="#installing-uv" title="Permanent link">&para;</a></h4>
+<p><strong>macOS and Linux:</strong>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div></p>
+<p><strong>Windows (PowerShell):</strong>
+<div class="highlight"><pre><span></span><code>irm<span class="w"> </span>https://astral.sh/uv/install.ps1<span class="w"> </span><span class="p">|</span><span class="w"> </span>iex
+</code></pre></div></p>
+<h4 id="creating-virtual-environment">Creating Virtual Environment<a class="headerlink" href="#creating-virtual-environment" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create project directory</span>
+mkdir<span class="w"> </span>nautilus_trading
+<span class="nb">cd</span><span class="w"> </span>nautilus_trading
+
+<span class="c1"># Create virtual environment</span>
+uv<span class="w"> </span>venv
+
+<span class="c1"># Activate virtual environment</span>
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">  </span><span class="c1"># Linux/macOS</span>
+<span class="c1"># or</span>
+.venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate<span class="w">     </span><span class="c1"># Windows</span>
+</code></pre></div>
+<h2 id="23-installing-nautilustrader">2.3 Installing NautilusTrader<a class="headerlink" href="#23-installing-nautilustrader" title="Permanent link">&para;</a></h2>
+<h3 id="231-method-1-install-from-pypi-easiest">2.3.1 Method 1: Install from PyPI (Easiest)<a class="headerlink" href="#231-method-1-install-from-pypi-easiest" title="Permanent link">&para;</a></h3>
+<p>This is the most recommended installation method for most users.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Upgrade uv to latest version</span>
+uv<span class="w"> </span>self<span class="w"> </span>update
+
+<span class="c1"># Install nautilus_trader</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>nautilus_trader
+</code></pre></div>
+<h4 id="installing-specific-integrations-optional">Installing Specific Integrations (Optional)<a class="headerlink" href="#installing-specific-integrations-optional" title="Permanent link">&para;</a></h4>
+<p>If you need to use specific exchange integrations, you can install additional dependencies:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Interactive Brokers support</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"nautilus_trader[ib]"</span>
+
+<span class="c1"># Docker support</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"nautilus_trader[docker]"</span>
+
+<span class="c1"># Visualization tools</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"nautilus_trader[visualization]"</span>
+
+<span class="c1"># Betfair support</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"nautilus_trader[betfair]"</span>
+
+<span class="c1"># DydX support</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"nautilus_trader[dydx]"</span>
+
+<span class="c1"># Install all extra features</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"nautilus_trader[all]"</span>
+</code></pre></div>
+<h4 id="verifying-installation">Verifying Installation<a class="headerlink" href="#verifying-installation" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create test script test_install.py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nautilus_trader</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstrumentId</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"NautilusTrader version: </span><span class="si">{</span><span class="n">nt</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Installation successful!"</span><span class="p">)</span>
+
+<span class="c1"># Test basic functionality</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Try to create a simple object</span>
+    <span class="n">instrument_id</span> <span class="o">=</span> <span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT.BINANCE"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Test passed: </span><span class="si">{</span><span class="n">instrument_id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Test failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p>Run the test:
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>test_install.py
+</code></pre></div></p>
+<h3 id="232-method-2-install-from-nautech-systems-package-index">2.3.2 Method 2: Install from Nautech Systems Package Index<a class="headerlink" href="#232-method-2-install-from-nautech-systems-package-index" title="Permanent link">&para;</a></h3>
+<p>This method provides more version options, including development versions.</p>
+<h4 id="stable-version">Stable Version<a class="headerlink" href="#stable-version" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install latest stable version from official package index</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>nautilus_trader<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--index-url<span class="w"> </span>https://packages.nautechsystems.io/simple
+</code></pre></div>
+<h4 id="development-version">Development Version<a class="headerlink" href="#development-version" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install latest development version (includes latest features)</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>nautilus_trader<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--index-url<span class="w"> </span>https://packages.nautechsystems.io/simple
+</code></pre></div>
+<h4 id="specific-version">Specific Version<a class="headerlink" href="#specific-version" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install specific version</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">nautilus_trader</span><span class="o">==</span><span class="m">1</span>.220.0<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--index-url<span class="w"> </span>https://packages.nautechsystems.io/simple
+</code></pre></div>
+<h3 id="233-method-3-build-from-source-developers">2.3.3 Method 3: Build from Source (Developers)<a class="headerlink" href="#233-method-3-build-from-source-developers" title="Permanent link">&para;</a></h3>
+<p>If you need to modify source code or use the latest unreleased features.</p>
+<h4 id="installing-build-dependencies">Installing Build Dependencies<a class="headerlink" href="#installing-build-dependencies" title="Permanent link">&para;</a></h4>
+<p><strong>Installing Rust:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install using rustup (recommended)</span>
+curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://sh.rustup.rs<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+<span class="nb">source</span><span class="w"> </span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.cargo/env"</span>
+
+<span class="c1"># Verify installation</span>
+rustc<span class="w"> </span>--version
+cargo<span class="w"> </span>--version
+</code></pre></div></p>
+<p><strong>Installing Clang (Linux):</strong>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>clang
+</code></pre></div></p>
+<p><strong>Installing Clang (Windows):</strong>
+1. Install Visual Studio 2022
+2. Select "C++ Clang tools for Windows" in the installer</p>
+<h4 id="clone-and-build">Clone and Build<a class="headerlink" href="#clone-and-build" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Clone repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>develop<span class="w"> </span>https://github.com/nautechsystems/nautilus_trader.git
+<span class="nb">cd</span><span class="w"> </span>nautilus_trader
+
+<span class="c1"># Install all dependencies</span>
+uv<span class="w"> </span>sync<span class="w"> </span>--all-extras
+
+<span class="c1"># Set environment variables (Linux/macOS)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYO3_PYTHON</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/.venv/bin/python
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONHOME</span><span class="o">=</span><span class="k">$(</span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import sys; print(sys.base_prefix)"</span><span class="k">)</span>
+</code></pre></div>
+<h4 id="build-and-install">Build and Install<a class="headerlink" href="#build-and-install" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Build project</span>
+make<span class="w"> </span>build
+
+<span class="c1"># Or use make to build debug version</span>
+make<span class="w"> </span>build-debug
+
+<span class="c1"># Install to current environment</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</code></pre></div>
+<h3 id="234-method-4-using-docker-containerization">2.3.4 Method 4: Using Docker (Containerization)<a class="headerlink" href="#234-method-4-using-docker-containerization" title="Permanent link">&para;</a></h3>
+<p>If you want to use a containerized environment.</p>
+<h4 id="pull-image">Pull Image<a class="headerlink" href="#pull-image" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Pull latest version</span>
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/nautechsystems/nautilus_trader:latest
+
+<span class="c1"># Or pull nightly version</span>
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/nautechsystems/nautilus_trader:nightly
+</code></pre></div>
+<h4 id="run-container">Run Container<a class="headerlink" href="#run-container" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Run interactive container</span>
+docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/workspace<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ghcr.io/nautechsystems/nautilus_trader:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>bash
+
+<span class="c1"># Or use JupyterLab</span>
+docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8888</span>:8888<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ghcr.io/nautechsystems/jupyterlab:latest
+</code></pre></div>
+<h4 id="dockerfile-example">Dockerfile Example<a class="headerlink" href="#dockerfile-example" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">ghcr.io/nautechsystems/nautilus_trader:latest</span>
+
+<span class="c"># Install additional dependencies</span>
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"nautilus_trader[all]"</span>
+
+<span class="c"># Copy your strategy code</span>
+<span class="k">COPY</span><span class="w"> </span>./strategies<span class="w"> </span>/app/strategies
+<span class="k">COPY</span><span class="w"> </span>./data<span class="w"> </span>/app/data
+
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+
+<span class="c"># Run your strategy</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"python"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-m"</span><span class="p">,</span><span class="w"> </span><span class="s2">"nautilus_trader"</span><span class="p">,</span><span class="w"> </span><span class="s2">"run"</span><span class="p">,</span><span class="w"> </span><span class="s2">"--config"</span><span class="p">,</span><span class="w"> </span><span class="s2">"config.yml"</span><span class="p">]</span>
+</code></pre></div>
+<h2 id="24-development-environment-configuration">2.4 Development Environment Configuration<a class="headerlink" href="#24-development-environment-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="241-ide-configuration">2.4.1 IDE Configuration<a class="headerlink" href="#241-ide-configuration" title="Permanent link">&para;</a></h3>
+<h4 id="vs-code-configuration">VS Code Configuration<a class="headerlink" href="#vs-code-configuration" title="Permanent link">&para;</a></h4>
+<p><strong>Install extensions:</strong>
+1. Python
+2. Python Docstring Generator
+3. Pylance
+4. GitLens
+5. Docker (if using Docker)</p>
+<p><strong>Configure settings.json:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">"python.defaultInterpreterPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./.venv/bin/python"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"python.linting.enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"python.linting.pylintEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"python.formatting.provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"black"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"editor.formatOnSave"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"editor.codeActionsOnSave"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"source.organizeImports"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Configure debugger (.vscode/launch.json):</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Debug Strategy"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"python"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"program"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}/run_strategy.py"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"console"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integratedTerminal"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"PYTHONPATH"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h4 id="pycharm-configuration">PyCharm Configuration<a class="headerlink" href="#pycharm-configuration" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Open project</li>
+<li>Set Python interpreter to point to virtual environment</li>
+<li>Configure code style (Black)</li>
+<li>Set up type checking (mypy)</li>
+</ol>
+<h3 id="242-code-formatting-and-quality-checking">2.4.2 Code Formatting and Quality Checking<a class="headerlink" href="#242-code-formatting-and-quality-checking" title="Permanent link">&para;</a></h3>
+<p><strong>Create pyproject.toml:</strong>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.black]</span>
+<span class="n">line-length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
+<span class="n">target-version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">'py312'</span><span class="p">]</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'\.pyi?$'</span>
+<span class="n">extend-exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'''</span>
+<span class="s1">/(</span>
+<span class="s1">  # directories</span>
+<span class="s1">  \.eggs</span>
+<span class="s1">  | \.git</span>
+<span class="s1">  | \.hg</span>
+<span class="s1">  | \.mypy_cache</span>
+<span class="s1">  | \.tox</span>
+<span class="s1">  | \.venv</span>
+<span class="s1">  | build</span>
+<span class="s1">  | dist</span>
+<span class="s1">)/</span>
+<span class="s1">'''</span>
+
+<span class="k">[tool.isort]</span>
+<span class="n">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"black"</span>
+<span class="n">multi_line_output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<span class="n">line_length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
+<span class="n">include_trailing_comma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+
+<span class="k">[tool.mypy]</span>
+<span class="n">python_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"3.12"</span>
+<span class="n">warn_return_any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">warn_unused_configs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">disallow_untyped_defs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+
+<span class="k">[tool.ruff]</span>
+<span class="n">line-length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
+<span class="n">select</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"E"</span><span class="p">,</span><span class="w"> </span><span class="s2">"F"</span><span class="p">,</span><span class="w"> </span><span class="s2">"W"</span><span class="p">,</span><span class="w"> </span><span class="s2">"C90"</span><span class="p">]</span>
+<span class="n">ignore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"E501"</span><span class="p">]</span>
+</code></pre></div></p>
+<h3 id="243-git-configuration">2.4.3 Git Configuration<a class="headerlink" href="#243-git-configuration" title="Permanent link">&para;</a></h3>
+<p>Create <code>.gitignore</code>:
+<div class="highlight"><pre><span></span><code># Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NautilusTrader specific
+logs/
+data/
+*.log
+config_live.yml
+</code></pre></div></p>
+<h2 id="25-common-issues-and-solutions">2.5 Common Issues and Solutions<a class="headerlink" href="#25-common-issues-and-solutions" title="Permanent link">&para;</a></h2>
+<h3 id="issue-1-python-version-incompatibility">Issue 1: Python Version Incompatibility<a class="headerlink" href="#issue-1-python-version-incompatibility" title="Permanent link">&para;</a></h3>
+<p><strong>Error message:</strong>
+<div class="highlight"><pre><span></span><code>ERROR: Package requires a different Python
+</code></pre></div></p>
+<p><strong>Solution:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check Python version</span>
+python<span class="w"> </span>--version
+
+<span class="c1"># Switch to 3.12+ using pyenv</span>
+pyenv<span class="w"> </span>global<span class="w"> </span><span class="m">3</span>.12.7
+
+<span class="c1"># Or create new environment using conda</span>
+conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>nautilus<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.12
+conda<span class="w"> </span>activate<span class="w"> </span>nautilus
+</code></pre></div></p>
+<h3 id="issue-2-compilation-error-linux">Issue 2: Compilation Error (Linux)<a class="headerlink" href="#issue-2-compilation-error-linux" title="Permanent link">&para;</a></h3>
+<p><strong>Error message:</strong>
+<div class="highlight"><pre><span></span><code>error: invalid value for 'target-feature': 'crt-static'
+</code></pre></div></p>
+<p><strong>Solution:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install system dependencies</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>build-essential
+
+<span class="c1"># Or use static linking</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">RUSTFLAGS</span><span class="o">=</span><span class="s2">"-C target-feature=+crt-static"</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>nautilus_trader
+</code></pre></div></p>
+<h3 id="issue-3-insufficient-memory">Issue 3: Insufficient Memory<a class="headerlink" href="#issue-3-insufficient-memory" title="Permanent link">&para;</a></h3>
+<p><strong>Error message:</strong>
+<div class="highlight"><pre><span></span><code>MemoryError during build
+</code></pre></div></p>
+<p><strong>Solution:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Increase swap space</span>
+sudo<span class="w"> </span>fallocate<span class="w"> </span>-l<span class="w"> </span>4G<span class="w"> </span>/swapfile
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>/swapfile
+sudo<span class="w"> </span>mkswap<span class="w"> </span>/swapfile
+sudo<span class="w"> </span>swapon<span class="w"> </span>/swapfile
+
+<span class="c1"># Limit parallel compilation</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CARGO_BUILD_JOBS</span><span class="o">=</span><span class="m">2</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>nautilus_trader
+</code></pre></div></p>
+<h3 id="issue-4-network-issues-chinese-users">Issue 4: Network Issues (Chinese Users)<a class="headerlink" href="#issue-4-network-issues-chinese-users" title="Permanent link">&para;</a></h3>
+<p><strong>Error message:</strong>
+<div class="highlight"><pre><span></span><code>Could not fetch URL https://pypi.org/simple/...
+</code></pre></div></p>
+<p><strong>Solution:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Use domestic mirror</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>nautilus_trader<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--index-url<span class="w"> </span>https://pypi.tuna.tsinghua.edu.cn/simple
+
+<span class="c1"># Or configure pip</span>
+pip<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>global.index-url<span class="w"> </span>https://pypi.tuna.tsinghua.edu.cn/simple
+</code></pre></div></p>
+<h3 id="issue-5-permission-error">Issue 5: Permission Error<a class="headerlink" href="#issue-5-permission-error" title="Permanent link">&para;</a></h3>
+<p><strong>Error message:</strong>
+<div class="highlight"><pre><span></span><code>PermissionError: [Errno 13] Permission denied
+</code></pre></div></p>
+<p><strong>Solution:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Use user installation</span>
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>nautilus_trader
+
+<span class="c1"># Or use virtual environment (recommended)</span>
+uv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>nautilus_trader
+</code></pre></div></p>
+<h2 id="26-verifying-installation">2.6 Verifying Installation<a class="headerlink" href="#26-verifying-installation" title="Permanent link">&para;</a></h2>
+<h3 id="create-test-script">Create Test Script<a class="headerlink" href="#create-test-script" title="Permanent link">&para;</a></h3>
+<p>Create <code>verify_installation.py</code>:
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">"""</span>
+<span class="sd">Verify NautilusTrader Installation</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_imports</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test basic imports"""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Testing imports..."</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">nautilus_trader</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nt</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ NautilusTrader </span><span class="si">{</span><span class="n">nt</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✗ Import failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstrumentId</span><span class="p">,</span> <span class="n">Price</span><span class="p">,</span> <span class="n">Quantity</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Core models"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✗ Core models import failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.backtest.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">BacktestEngine</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Backtest engine"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✗ Backtest engine import failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.adapters.binance.common.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinanceAccountType</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Binance adapter"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"⚠ Binance adapter not installed (optional)"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_basic_functionality</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test basic functionality"""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing basic functionality..."</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstrumentId</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+
+        <span class="c1"># Create instrument ID</span>
+        <span class="n">instrument_id</span> <span class="o">=</span> <span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT.BINANCE"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Created instrument ID: </span><span class="si">{</span><span class="n">instrument_id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1"># Create price object</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">Price</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"50000.00"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Created price object: </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✗ Basic functionality test failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_performance</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test performance"""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing performance..."</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">Price</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+
+        <span class="c1"># Test object creation speed</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+            <span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"50000.00"</span><span class="p">)</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Created 10,000 price objects in </span><span class="si">{</span><span class="n">elapsed</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✗ Performance test failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"NautilusTrader Installation Verification"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+
+    <span class="c1"># Check Python version</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"⚠ Python version too low: </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Python 3.12 or higher is required"</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Python version: </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="c1"># Run tests</span>
+    <span class="n">tests</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">test_imports</span><span class="p">,</span>
+        <span class="n">test_basic_functionality</span><span class="p">,</span>
+        <span class="n">test_performance</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">all_passed</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">tests</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">test</span><span class="p">():</span>
+            <span class="n">all_passed</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">all_passed</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ All tests passed! Installation successful."</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"⚠ Some tests failed. Please check installation."</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></p>
+<h3 id="run-verification">Run Verification<a class="headerlink" href="#run-verification" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>verify_installation.py
+</code></pre></div>
+<h3 id="expected-output">Expected Output<a class="headerlink" href="#expected-output" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>NautilusTrader Installation Verification
+========================================
+✓ Python version: 3.12.7
+Testing imports...
+✓ NautilusTrader 1.220.0
+✓ Core models
+✓ Backtest engine
+✓ Binance adapter
+Testing basic functionality...
+✓ Created instrument ID: BTCUSDT.BINANCE
+✓ Created price object: 50000.00
+Testing performance...
+✓ Created 10,000 price objects in 0.045 seconds
+
+========================================
+✓ All tests passed! Installation successful.
+</code></pre></div>
+<h2 id="27-next-steps">2.7 Next Steps<a class="headerlink" href="#27-next-steps" title="Permanent link">&para;</a></h2>
+<p>Congratulations! You have successfully installed NautilusTrader. In the next chapter, we will:</p>
+<ol>
+<li>Learn NautilusTrader's core concepts</li>
+<li>Create your first simple strategy</li>
+<li>Run your first backtest</li>
+<li>Understand the basic workflow</li>
+</ol>
+<h2 id="28-summary">2.8 Summary<a class="headerlink" href="#28-summary" title="Permanent link">&para;</a></h2>
+<p>This chapter detailed the NautilusTrader installation process:</p>
+<h3 id="key-points">Key Points<a class="headerlink" href="#key-points" title="Permanent link">&para;</a></h3>
+<ol>
+<li>System requirements: Python 3.12+, supports mainstream operating systems</li>
+<li>Recommend using uv package manager for fast installation</li>
+<li>Multiple installation methods: PyPI, source build, Docker</li>
+<li>Virtual environment isolation to avoid dependency conflicts</li>
+<li>Verify installation to ensure functionality works</li>
+</ol>
+<h3 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use pyenv to manage Python versions</li>
+<li>Use uv to manage package dependencies</li>
+<li>Create dedicated virtual environments</li>
+<li>Configure development tools and environment properly</li>
+<li>Run verification scripts to confirm installation</li>
+</ul>
+<h2 id="29-references">2.9 References<a class="headerlink" href="#29-references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://nautilustrader.io/docs/latest/getting_started/installation/">Official Installation Guide</a></li>
+<li><a href="https://docs.astral.sh/uv/">uv Documentation</a></li>
+<li><a href="https://github.com/pyenv/pyenv">pyenv Documentation</a></li>
+<li><a href="https://www.rust-lang.org/tools/install">Rust Installation Guide</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 NautilusTrader 实战教程 · 仅供学习交流，不构成投资建议
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

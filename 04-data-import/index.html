@@ -1,0 +1,2892 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="NautilusTrader 量化交易框架系统教程（中英双语）— 从安装入门到实盘部署">
+      
+      
+      
+        <link rel="canonical" href="https://henrylin99.github.io/nautilus-trader-tutorials/04-data-import/">
+      
+      
+        <link rel="prev" href="../03-quickstart/">
+      
+      
+        <link rel="next" href="../05-backtest-engine/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="zh">
+        
+          <link rel="alternate" href="../en/04-data-import/" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>第4章：数据导入与处理 - NautilusTrader 实战教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9784658154228475"
+     crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VGHZY4EELE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-VGHZY4EELE");
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#4" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="NautilusTrader 实战教程" class="md-header__button md-logo" aria-label="NautilusTrader 实战教程" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NautilusTrader 实战教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第4章：数据导入与处理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="切换深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="切换浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../en/04-data-import/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/henrylin99/nautilus-trader-tutorials" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    henrylin99/nautilus-trader-tutorials
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+  
+  🇨🇳 中文教程
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="NautilusTrader 实战教程" class="md-nav__button md-logo" aria-label="NautilusTrader 实战教程" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    NautilusTrader 实战教程
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/henrylin99/nautilus-trader-tutorials" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    henrylin99/nautilus-trader-tutorials
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🇨🇳 中文教程
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🇨🇳 中文教程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1章：NautilusTrader 简介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2章：环境搭建与安装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3章：快速开始
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4章：数据导入与处理
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4章：数据导入与处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        学习目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 数据类型概览
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 数据类型概览">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-tick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 Tick 数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1.1 Tick 数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quotetick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QuoteTick（报价数据）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tradetick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TradeTick（成交数据）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412-kbar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.2 K线数据（Bar）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#413" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.3 订单簿数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1.3 订单簿数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#orderbooksnapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OrderBookSnapshot（订单簿快照）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 从 CSV 导入数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 从 CSV 导入数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.1 准备 CSV 数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.2 创建数据导入器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#423-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.3 创建CSV文件生成器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#424" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.4 运行示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 数据质量控制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 数据质量控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 数据验证清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.2 数据清洗策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 时间同步处理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 时间同步处理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#441" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.1 时区处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 下一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 总结
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.6 总结">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键要点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实践建议
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#47" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-backtest-engine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5章：基础回测引擎使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-time-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6章：时间管理和事件处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-indicators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7章：技术指标系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-order-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8章：订单管理系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-portfolio-risk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9章：投资组合与风险管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-advanced-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10章：高级数据处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-message-actor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11章：消息传递与Actor模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-performance-optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12章：性能优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-live-trading-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13章：实盘交易架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-exchange-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14章：交易所集成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-live-strategy-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第15章：实盘策略部署
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-algorithmic-trading-strategies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第16章：算法交易策略
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-machine-learning-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第17章：机器学习和AI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-custom-component-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第18章：自定义组件开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-complete-project-example-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第19章：完整项目示例1：加密货币做市策略
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-complete-project-example-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第20章：完整项目示例2：多策略量化基金
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        学习目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 数据类型概览
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 数据类型概览">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-tick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.1 Tick 数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1.1 Tick 数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quotetick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QuoteTick（报价数据）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tradetick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TradeTick（成交数据）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412-kbar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.2 K线数据（Bar）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#413" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1.3 订单簿数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1.3 订单簿数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#orderbooksnapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OrderBookSnapshot（订单簿快照）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 从 CSV 导入数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 从 CSV 导入数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.1 准备 CSV 数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.2 创建数据导入器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#423-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.3 创建CSV文件生成器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#424" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.4 运行示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 数据质量控制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 数据质量控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 数据验证清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.2 数据清洗策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 时间同步处理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 时间同步处理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#441" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.1 时区处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 下一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 总结
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.6 总结">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键要点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实践建议
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#47" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="4">第4章：数据导入与处理<a class="headerlink" href="#4" title="Permanent link">&para;</a></h1>
+<h2 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>通过本章学习，您将：
+- 了解 NautilusTrader 支持的各种数据类型
+- 掌握从 CSV 文件导入数据的方法
+- 学会处理和清洗历史数据
+- 理解时间同步的重要性
+- 创建和验证高质量的数据集</p>
+<h2 id="41">4.1 数据类型概览<a class="headerlink" href="#41" title="Permanent link">&para;</a></h2>
+<p>NautilusTrader 支持多种市场数据类型，每种数据都有其特定的用途：</p>
+<h3 id="411-tick">4.1.1 Tick 数据<a class="headerlink" href="#411-tick" title="Permanent link">&para;</a></h3>
+<h4 id="quotetick">QuoteTick（报价数据）<a class="headerlink" href="#quotetick" title="Permanent link">&para;</a></h4>
+<p>包含买卖价格信息，是最高频的数据类型：
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuoteTick</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">Price</span><span class="p">,</span> <span class="n">Quantity</span>
+
+<span class="c1"># 创建报价tick</span>
+<span class="n">quote</span> <span class="o">=</span> <span class="n">QuoteTick</span><span class="p">(</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">BTCUSDT_BINANCE</span><span class="p">,</span>
+    <span class="n">bid_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"50000.00"</span><span class="p">),</span>
+    <span class="n">ask_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"50001.00"</span><span class="p">),</span>
+    <span class="n">bid_size</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">ask_size</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span>
+    <span class="n">ts_event</span><span class="o">=</span><span class="mi">1640995200000000000</span><span class="p">,</span>  <span class="c1"># 纳秒时间戳</span>
+    <span class="n">ts_init</span><span class="o">=</span><span class="mi">1640995200000000000</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 使用场景</span>
+<span class="c1"># - 高频交易</span>
+<span class="c1"># - 订单簿分析</span>
+<span class="c1"># - 延迟分析</span>
+<span class="c1"># - 滑点计算</span>
+</code></pre></div></p>
+<h4 id="tradetick">TradeTick（成交数据）<a class="headerlink" href="#tradetick" title="Permanent link">&para;</a></h4>
+<p>记录实际成交的价格和数量：
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">TradeTick</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">AggressorSide</span>
+
+<span class="c1"># 创建成交tick</span>
+<span class="n">trade</span> <span class="o">=</span> <span class="n">TradeTick</span><span class="p">(</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">BTCUSDT_BINANCE</span><span class="p">,</span>
+    <span class="n">price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"50000.50"</span><span class="p">),</span>
+    <span class="n">size</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">aggressor_side</span><span class="o">=</span><span class="n">AggressorSide</span><span class="o">.</span><span class="n">BUYER</span><span class="p">,</span>  <span class="c1"># 买方吃单</span>
+    <span class="n">trade_id</span><span class="o">=</span><span class="s2">"123456789"</span><span class="p">,</span>
+    <span class="n">ts_event</span><span class="o">=</span><span class="mi">1640995200000000000</span><span class="p">,</span>
+    <span class="n">ts_init</span><span class="o">=</span><span class="mi">1640995200000000000</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 使用场景</span>
+<span class="c1"># - 成交量分析</span>
+<span class="c1"># - 交易流向分析</span>
+<span class="c1"># - 微观结构研究</span>
+</code></pre></div></p>
+<h3 id="412-kbar">4.1.2 K线数据（Bar）<a class="headerlink" href="#412-kbar" title="Permanent link">&para;</a></h3>
+<p>K线数据是tick数据的聚合，包含OHLCV信息：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bar</span><span class="p">,</span> <span class="n">BarType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">BarAggregation</span><span class="p">,</span> <span class="n">PriceType</span>
+
+<span class="c1"># 定义K线类型</span>
+<span class="n">bar_type</span> <span class="o">=</span> <span class="n">BarType</span><span class="p">(</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT.BINANCE"</span><span class="p">),</span>
+    <span class="n">bar_spec</span><span class="o">=</span><span class="n">BarSpecification</span><span class="p">(</span>
+        <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">aggregation</span><span class="o">=</span><span class="n">BarAggregation</span><span class="o">.</span><span class="n">MINUTE</span><span class="p">,</span>  <span class="c1"># 1分钟K线</span>
+        <span class="n">price_type</span><span class="o">=</span><span class="n">PriceType</span><span class="o">.</span><span class="n">LAST</span><span class="p">,</span>         <span class="c1"># 成交价</span>
+    <span class="p">),</span>
+    <span class="n">aggregation_source</span><span class="o">=</span><span class="s2">"BINANCE"</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 创建K线</span>
+<span class="n">bar</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">(</span>
+    <span class="n">bar_type</span><span class="o">=</span><span class="n">bar_type</span><span class="p">,</span>
+    <span class="nb">open</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"50000.00"</span><span class="p">),</span>
+    <span class="n">high</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"50100.00"</span><span class="p">),</span>
+    <span class="n">low</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"49900.00"</span><span class="p">),</span>
+    <span class="n">close</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"50050.00"</span><span class="p">),</span>
+    <span class="n">volume</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="n">ts_event</span><span class="o">=</span><span class="mi">1640995200000000000</span><span class="p">,</span>
+    <span class="n">ts_init</span><span class="o">=</span><span class="mi">1640995200000000000</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 使用场景</span>
+<span class="c1"># - 技术分析</span>
+<span class="c1"># - 回测验证</span>
+<span class="c1"># - 策略信号</span>
+<span class="c1"># - 风险管理</span>
+</code></pre></div>
+<h3 id="413">4.1.3 订单簿数据<a class="headerlink" href="#413" title="Permanent link">&para;</a></h3>
+<h4 id="orderbooksnapshot">OrderBookSnapshot（订单簿快照）<a class="headerlink" href="#orderbooksnapshot" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderBookSnapshot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.orderbook</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderBook</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderSide</span>
+
+<span class="c1"># 创建订单簿</span>
+<span class="n">book</span> <span class="o">=</span> <span class="n">OrderBook</span><span class="p">(</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT.BINANCE"</span><span class="p">),</span>
+    <span class="n">price_precision</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">size_precision</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 添加订单</span>
+<span class="n">book</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+    <span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+    <span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"50000.00"</span><span class="p">),</span>
+    <span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="mi">1640995200000000000</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">book</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+    <span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
+    <span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"50001.00"</span><span class="p">),</span>
+    <span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span>
+    <span class="mi">1640995200000000000</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 创建快照</span>
+<span class="n">snapshot</span> <span class="o">=</span> <span class="n">OrderBookSnapshot</span><span class="p">(</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">book</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
+    <span class="n">bids</span><span class="o">=</span><span class="n">book</span><span class="o">.</span><span class="n">bids</span><span class="p">(),</span>
+    <span class="n">asks</span><span class="o">=</span><span class="n">book</span><span class="o">.</span><span class="n">asks</span><span class="p">(),</span>
+    <span class="n">ts_event</span><span class="o">=</span><span class="mi">1640995200000000000</span><span class="p">,</span>
+    <span class="n">ts_init</span><span class="o">=</span><span class="mi">1640995200000000000</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 使用场景</span>
+<span class="c1"># - 做市策略</span>
+<span class="c1"># - 流动性分析</span>
+<span class="c1"># - 大单检测</span>
+<span class="c1"># - 滑点预测</span>
+</code></pre></div>
+<h2 id="42-csv">4.2 从 CSV 导入数据<a class="headerlink" href="#42-csv" title="Permanent link">&para;</a></h2>
+<p>CSV 是最常见的历史数据格式。让我们创建一个完整的数据导入流程。</p>
+<h3 id="421-csv">4.2.1 准备 CSV 数据<a class="headerlink" href="#421-csv" title="Permanent link">&para;</a></h3>
+<p>创建示例 CSV 文件 <code>btcusdt_1m.csv</code>：
+<div class="highlight"><pre><span></span><code>timestamp,open,high,low,close,volume
+2024-01-01 00:00:00,50000.00,50100.00,49900.00,50050.00,125.5
+2024-01-01 00:01:00,50050.00,50200.00,49950.00,50150.00,98.3
+2024-01-01 00:02:00,50150.00,50300.00,50000.00,50250.00,156.7
+2024-01-01 00:03:00,50250.00,50400.00,50150.00,50350.00,203.4
+2024-01-01 00:04:00,50350.00,50500.00,50250.00,50450.00,187.2
+</code></pre></div></p>
+<h3 id="422">4.2.2 创建数据导入器<a class="headerlink" href="#422" title="Permanent link">&para;</a></h3>
+<p>创建 <code>data_importer.py</code>：
+<div class="highlight"><pre><span></span><code><span class="sd">"""</span>
+<span class="sd">CSV 数据导入器</span>
+<span class="sd">支持多种 CSV 格式和配置选项</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">BarType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">BarSpecification</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">BarAggregation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">PriceType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.model.identifiers</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstrumentId</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.persistence.wranglers</span><span class="w"> </span><span class="kn">import</span> <span class="n">BarDataWrangler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nautilus_trader.test_kit.providers</span><span class="w"> </span><span class="kn">import</span> <span class="n">TestInstrumentProvider</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CSVDataImporter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    CSV 数据导入器</span>
+
+<span class="sd">    支持的功能：</span>
+<span class="sd">    - 自动检测列名</span>
+<span class="sd">    - 时间格式解析</span>
+<span class="sd">    - 数据验证</span>
+<span class="sd">    - 缺失值处理</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""初始化导入器"""</span>
+        <span class="c1"># 常见的列名映射</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_mappings</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">'timestamp'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'timestamp'</span><span class="p">,</span> <span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'time'</span><span class="p">,</span> <span class="s1">'date'</span><span class="p">],</span>
+            <span class="s1">'open'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'open'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">,</span> <span class="s1">'Open'</span><span class="p">],</span>
+            <span class="s1">'high'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'high'</span><span class="p">,</span> <span class="s1">'h'</span><span class="p">,</span> <span class="s1">'High'</span><span class="p">],</span>
+            <span class="s1">'low'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'low'</span><span class="p">,</span> <span class="s1">'l'</span><span class="p">,</span> <span class="s1">'Low'</span><span class="p">],</span>
+            <span class="s1">'close'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'close'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="s1">'Close'</span><span class="p">],</span>
+            <span class="s1">'volume'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'volume'</span><span class="p">,</span> <span class="s1">'vol'</span><span class="p">,</span> <span class="s1">'v'</span><span class="p">,</span> <span class="s1">'Volume'</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="c1"># 时间格式列表</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_formats</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S'</span><span class="p">,</span>
+            <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S.</span><span class="si">%f</span><span class="s1">'</span><span class="p">,</span>
+            <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S'</span><span class="p">,</span>
+            <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S.</span><span class="si">%f</span><span class="s1">'</span><span class="p">,</span>
+            <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">,</span>
+            <span class="s1">'</span><span class="si">%d</span><span class="s1">/%m/%Y %H:%M:%S'</span><span class="p">,</span>
+            <span class="s1">'%m/</span><span class="si">%d</span><span class="s1">/%Y %H:%M:%S'</span><span class="p">,</span>
+        <span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        加载 CSV 文件</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : Path</span>
+<span class="sd">            CSV 文件路径</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            加载的数据</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"加载 CSV 文件: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1"># 尝试不同的编码</span>
+        <span class="n">encodings</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'utf-8'</span><span class="p">,</span> <span class="s1">'gbk'</span><span class="p">,</span> <span class="s1">'gb2312'</span><span class="p">,</span> <span class="s1">'latin-1'</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">encoding</span> <span class="ow">in</span> <span class="n">encodings</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># 自动检测分隔符</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+                    <span class="n">file_path</span><span class="p">,</span>
+                    <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">kwargs</span>
+                <span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"成功加载，使用编码: </span><span class="si">{</span><span class="n">encoding</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+                <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"无法解码文件: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1"># 显示基本信息</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"数据形状: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"列名: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">normalize_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        标准化列名</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            原始数据</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            标准化后的数据</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"标准化列名..."</span><span class="p">)</span>
+
+        <span class="c1"># 转换为小写</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="c1"># 查找并重命名列</span>
+        <span class="n">column_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">standard_name</span><span class="p">,</span> <span class="n">possible_names</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_mappings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">possible_names</span><span class="p">:</span>
+                    <span class="n">column_map</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">standard_name</span>
+                    <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">column_map</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">column_map</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"重命名列: </span><span class="si">{</span><span class="n">column_map</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1"># 检查必需的列</span>
+        <span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'timestamp'</span><span class="p">,</span> <span class="s1">'open'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'low'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]</span>
+        <span class="n">missing_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">required_columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">missing_columns</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"缺少必需的列: </span><span class="si">{</span><span class="n">missing_columns</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1"># 如果没有volume列，添加默认值</span>
+        <span class="k">if</span> <span class="s1">'volume'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">'volume'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"添加默认volume列"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">timestamp_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'timestamp'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        解析时间戳</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            包含时间戳的数据</span>
+<span class="sd">        timestamp_col : str</span>
+<span class="sd">            时间戳列名</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            解析后的数据</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"解析时间戳..."</span><span class="p">)</span>
+
+        <span class="c1"># 尝试不同的时间格式</span>
+        <span class="k">for</span> <span class="n">time_format</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_formats</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">],</span>
+                    <span class="nb">format</span><span class="o">=</span><span class="n">time_format</span>
+                <span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"成功解析时间格式: </span><span class="si">{</span><span class="n">time_format</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 如果都失败了，尝试自动解析</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">])</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">"自动解析时间戳成功"</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"无法解析时间戳: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1"># 检查时间戳范围</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"时间范围: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> 到 </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1"># 设置为索引（可选）</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'timestamp'</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        验证和清洗数据</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            待验证的数据</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            验证后的数据</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"验证数据..."</span><span class="p">)</span>
+
+        <span class="c1"># 检查数值列</span>
+        <span class="n">numeric_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'open'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'low'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">,</span> <span class="s1">'volume'</span><span class="p">]</span>
+
+        <span class="c1"># 检查是否有空值</span>
+        <span class="n">null_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">numeric_columns</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">null_counts</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现空值: </span><span class="si">{</span><span class="n">null_counts</span><span class="p">[</span><span class="n">null_counts</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+            <span class="c1"># 删除包含空值的行</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="n">numeric_columns</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"删除包含空值的行"</span><span class="p">)</span>
+
+        <span class="c1"># 转换为数值类型</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">'coerce'</span><span class="p">)</span>
+
+        <span class="c1"># 检查价格关系</span>
+        <span class="n">invalid_prices</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">])</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">'open'</span><span class="p">])</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">'close'</span><span class="p">])</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">'open'</span><span class="p">])</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">'close'</span><span class="p">])</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">invalid_prices</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">invalid_prices</span><span class="p">)</span><span class="si">}</span><span class="s2"> 行无效的价格关系"</span><span class="p">)</span>
+            <span class="c1"># 修正价格关系</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'high'</span><span class="p">,</span> <span class="s1">'open'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'low'</span><span class="p">,</span> <span class="s1">'open'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"修正价格关系"</span><span class="p">)</span>
+
+        <span class="c1"># 检查负值</span>
+        <span class="n">negative_values</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'open'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'close'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">negative_values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">negative_values</span><span class="p">)</span><span class="si">}</span><span class="s2"> 行负价格"</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'open'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'close'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># 检查重复时间戳</span>
+        <span class="n">duplicates</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">duplicates</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="n">duplicates</span><span class="si">}</span><span class="s2"> 个重复时间戳"</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">'first'</span><span class="p">)]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"验证完成，剩余数据: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> 行"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert_to_bars</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">instrument_id</span><span class="p">:</span> <span class="n">InstrumentId</span><span class="p">,</span>
+        <span class="n">bar_type</span><span class="p">:</span> <span class="n">BarType</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Bar</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        转换为 Bar 对象</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            验证后的数据</span>
+<span class="sd">        instrument_id : InstrumentId</span>
+<span class="sd">            交易工具ID</span>
+<span class="sd">        bar_type : BarType</span>
+<span class="sd">            K线类型</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[Bar]</span>
+<span class="sd">            Bar对象列表</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"转换为 Bar 对象..."</span><span class="p">)</span>
+
+        <span class="c1"># 创建交易工具（使用测试工具作为示例）</span>
+        <span class="n">instrument</span> <span class="o">=</span> <span class="n">TestInstrumentProvider</span><span class="o">.</span><span class="n">btcusdt_binance</span><span class="p">()</span>
+
+        <span class="c1"># 创建数据整理器</span>
+        <span class="n">wrangler</span> <span class="o">=</span> <span class="n">BarDataWrangler</span><span class="p">(</span>
+            <span class="n">bar_type</span><span class="o">=</span><span class="n">bar_type</span><span class="p">,</span>
+            <span class="n">instrument</span><span class="o">=</span><span class="n">instrument</span>
+        <span class="p">)</span>
+
+        <span class="c1"># 重置索引以便访问时间戳</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+        <span class="c1"># 转换数据</span>
+        <span class="n">bars</span> <span class="o">=</span> <span class="n">wrangler</span><span class="o">.</span><span class="n">process_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"成功转换 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">bars</span><span class="p">)</span><span class="si">}</span><span class="s2"> 根K线"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bars</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">import_csv_to_bars</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+        <span class="n">instrument_id</span><span class="p">:</span> <span class="n">InstrumentId</span><span class="p">,</span>
+        <span class="n">bar_type</span><span class="p">:</span> <span class="n">BarType</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Bar</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        从CSV导入并转换为Bar对象的完整流程</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : Path</span>
+<span class="sd">            CSV文件路径</span>
+<span class="sd">        instrument_id : InstrumentId</span>
+<span class="sd">            交易工具ID</span>
+<span class="sd">        bar_type : BarType</span>
+<span class="sd">            K线类型</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            传递给pd.read_csv的参数</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[Bar]</span>
+<span class="sd">            Bar对象列表</span>
+<span class="sd">        """</span>
+        <span class="c1"># 1. 加载CSV</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># 2. 标准化列名</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_columns</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="c1"># 3. 解析时间戳</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_timestamp</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="c1"># 4. 验证数据</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="c1"># 5. 转换为Bar对象</span>
+        <span class="n">bars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_bars</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">instrument_id</span><span class="p">,</span> <span class="n">bar_type</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">bars</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""主函数 - 示例用法"""</span>
+
+    <span class="c1"># 创建导入器</span>
+    <span class="n">importer</span> <span class="o">=</span> <span class="n">CSVDataImporter</span><span class="p">()</span>
+
+    <span class="c1"># 定义交易工具和K线类型</span>
+    <span class="n">instrument_id</span> <span class="o">=</span> <span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT.BINANCE"</span><span class="p">)</span>
+    <span class="n">bar_type</span> <span class="o">=</span> <span class="n">BarType</span><span class="p">(</span>
+        <span class="n">instrument_id</span><span class="o">=</span><span class="n">instrument_id</span><span class="p">,</span>
+        <span class="n">bar_spec</span><span class="o">=</span><span class="n">BarSpecification</span><span class="p">(</span>
+            <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">aggregation</span><span class="o">=</span><span class="n">BarAggregation</span><span class="o">.</span><span class="n">MINUTE</span><span class="p">,</span>
+            <span class="n">price_type</span><span class="o">=</span><span class="n">PriceType</span><span class="o">.</span><span class="n">LAST</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">aggregation_source</span><span class="o">=</span><span class="s2">"BINANCE"</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 导入数据</span>
+    <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"btcusdt_1m.csv"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">csv_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">bars</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">import_csv_to_bars</span><span class="p">(</span>
+                <span class="n">file_path</span><span class="o">=</span><span class="n">csv_path</span><span class="p">,</span>
+                <span class="n">instrument_id</span><span class="o">=</span><span class="n">instrument_id</span><span class="p">,</span>
+                <span class="n">bar_type</span><span class="o">=</span><span class="n">bar_type</span><span class="p">,</span>
+                <span class="n">sep</span><span class="o">=</span><span class="s1">','</span><span class="p">,</span>
+                <span class="n">skipinitialspace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># 显示结果</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">成功导入 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">bars</span><span class="p">)</span><span class="si">}</span><span class="s2"> 根K线"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">bars</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"第一根K线: </span><span class="si">{</span><span class="n">bars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"最后一根K线: </span><span class="si">{</span><span class="n">bars</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"导入失败: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"文件不存在: </span><span class="si">{</span><span class="n">csv_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"请创建测试CSV文件后再运行"</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></p>
+<h3 id="423-csv">4.2.3 创建CSV文件生成器<a class="headerlink" href="#423-csv" title="Permanent link">&para;</a></h3>
+<p>为了测试，我们创建一个生成模拟CSV数据的工具：</p>
+<p>创建 <code>generate_csv_data.py</code>：
+<div class="highlight"><pre><span></span><code><span class="sd">"""</span>
+<span class="sd">生成模拟的CSV历史数据</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_price_data</span><span class="p">(</span>
+    <span class="n">days</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="n">start_price</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">50000.0</span><span class="p">,</span>
+    <span class="n">volatility</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span>
+    <span class="n">trend</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"btcusdt_1m.csv"</span><span class="p">)</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    生成模拟的1分钟K线数据</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    days : int</span>
+<span class="sd">        生成天数</span>
+<span class="sd">    start_price : float</span>
+<span class="sd">        起始价格</span>
+<span class="sd">    volatility : float</span>
+<span class="sd">        波动率</span>
+<span class="sd">    trend : float</span>
+<span class="sd">        趋势（正值上涨，负值下跌）</span>
+<span class="sd">    output_path : Path</span>
+<span class="sd">        输出文件路径</span>
+<span class="sd">    """</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"生成 </span><span class="si">{</span><span class="n">days</span><span class="si">}</span><span class="s2"> 天的1分钟K线数据..."</span><span class="p">)</span>
+
+    <span class="c1"># 计算分钟数</span>
+    <span class="n">minutes</span> <span class="o">=</span> <span class="n">days</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">60</span>
+    <span class="n">timestamps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">periods</span><span class="o">=</span><span class="n">minutes</span><span class="p">,</span>
+        <span class="n">freq</span><span class="o">=</span><span class="s1">'1min'</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 生成价格数据</span>
+    <span class="n">prices</span> <span class="o">=</span> <span class="p">[</span><span class="n">start_price</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">minutes</span><span class="p">):</span>
+        <span class="c1"># 随机游走 + 趋势</span>
+        <span class="n">change</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">trend</span><span class="p">,</span> <span class="n">volatility</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1440</span><span class="p">))</span>
+        <span class="n">new_price</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">change</span><span class="p">)</span>
+        <span class="n">prices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">new_price</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>  <span class="c1"># 确保价格不为负</span>
+
+    <span class="n">prices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+
+    <span class="c1"># 生成OHLC</span>
+    <span class="n">opens</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">closes</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="c1"># 生成高低价（在开盘和收盘之间）</span>
+    <span class="n">highs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">opens</span><span class="p">,</span> <span class="n">closes</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="n">minutes</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">lows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">opens</span><span class="p">,</span> <span class="n">closes</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="n">minutes</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1"># 生成成交量（与价格变动相关）</span>
+    <span class="n">volume_base</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">volume</span> <span class="o">=</span> <span class="n">volume_base</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">minutes</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">volume</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># 创建DataFrame</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s1">'timestamp'</span><span class="p">:</span> <span class="n">timestamps</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s1">'open'</span><span class="p">:</span> <span class="n">opens</span><span class="p">,</span>
+        <span class="s1">'high'</span><span class="p">:</span> <span class="n">highs</span><span class="p">,</span>
+        <span class="s1">'low'</span><span class="p">:</span> <span class="n">lows</span><span class="p">,</span>
+        <span class="s1">'close'</span><span class="p">:</span> <span class="n">closes</span><span class="p">,</span>
+        <span class="s1">'volume'</span><span class="p">:</span> <span class="n">volume</span><span class="p">,</span>
+    <span class="p">})</span>
+
+    <span class="c1"># 格式化时间戳</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S'</span><span class="p">)</span>
+
+    <span class="c1"># 保存到CSV</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"数据已保存到: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"数据范围: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> 到 </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"价格范围: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'open'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 到 </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""主函数"""</span>
+    <span class="c1"># 生成7天的数据</span>
+    <span class="n">generate_price_data</span><span class="p">(</span>
+        <span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+        <span class="n">start_price</span><span class="o">=</span><span class="mf">50000.0</span><span class="p">,</span>
+        <span class="n">volatility</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>  <span class="c1"># 2% 日波动率</span>
+        <span class="n">trend</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>     <span class="c1"># 轻微上涨趋势</span>
+    <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></p>
+<h3 id="424">4.2.4 运行示例<a class="headerlink" href="#424" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. 生成测试数据</span>
+python<span class="w"> </span>generate_csv_data.py
+
+<span class="c1"># 2. 导入并处理数据</span>
+python<span class="w"> </span>data_importer.py
+</code></pre></div>
+<h2 id="43">4.3 数据质量控制<a class="headerlink" href="#43" title="Permanent link">&para;</a></h2>
+<p>高质量的数据是回测成功的关键。以下是一些重要的质量控制措施：</p>
+<h3 id="431">4.3.1 数据验证清单<a class="headerlink" href="#431" title="Permanent link">&para;</a></h3>
+<p>创建 <code>data_validator.py</code>：
+<div class="highlight"><pre><span></span><code><span class="sd">"""</span>
+<span class="sd">数据验证工具</span>
+<span class="sd">确保数据质量</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DataValidator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""数据验证器"""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""初始化验证器"""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_completeness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        验证数据完整性</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            待验证的数据</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            验证是否通过</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"验证数据完整性..."</span><span class="p">)</span>
+
+        <span class="c1"># 检查缺失值</span>
+        <span class="n">null_counts</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">null_counts</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现缺失值: </span><span class="si">{</span><span class="n">null_counts</span><span class="p">[</span><span class="n">null_counts</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># 检查空数据集</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"数据集为空"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"数据完整性验证通过，共 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> 行"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_time_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">timestamp_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'timestamp'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        验证时间序列</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            待验证的数据</span>
+<span class="sd">        timestamp_col : str</span>
+<span class="sd">            时间戳列名</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            验证是否通过</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"验证时间序列..."</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">timestamp_col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"缺少时间戳列: </span><span class="si">{</span><span class="n">timestamp_col</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># 确保时间戳是datetime类型</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_datetime64_any_dtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">]):</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">])</span>
+
+        <span class="c1"># 检查时间戳是否递增</span>
+        <span class="n">time_diff</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">time_diff</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">invalid_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">time_diff</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="n">invalid_count</span><span class="si">}</span><span class="s2"> 个非递增的时间戳"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># 检查时间间隔</span>
+        <span class="n">min_interval</span> <span class="o">=</span> <span class="n">time_diff</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">max_interval</span> <span class="o">=</span> <span class="n">time_diff</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"时间间隔范围: </span><span class="si">{</span><span class="n">min_interval</span><span class="si">}</span><span class="s2"> 到 </span><span class="si">{</span><span class="n">max_interval</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1"># 检查是否有异常的时间间隔</span>
+        <span class="n">expected_interval</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 假设是1分钟数据</span>
+        <span class="n">tolerance</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+        <span class="n">irregular_intervals</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">time_diff</span> <span class="o">&gt;</span> <span class="n">expected_interval</span> <span class="o">+</span> <span class="n">tolerance</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">irregular_intervals</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">irregular_intervals</span><span class="p">)</span><span class="si">}</span><span class="s2"> 个异常时间间隔"</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"时间序列验证通过"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_price_relationships</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        验证价格关系</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            待验证的数据</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            验证是否通过</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"验证价格关系..."</span><span class="p">)</span>
+
+        <span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'open'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'low'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]</span>
+        <span class="n">missing_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">required_columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">missing_columns</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"缺少价格列: </span><span class="si">{</span><span class="n">missing_columns</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># 检查价格关系</span>
+        <span class="n">invalid_high</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'open'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">invalid_low</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'open'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">total_invalid</span> <span class="o">=</span> <span class="p">(</span><span class="n">invalid_high</span> <span class="o">|</span> <span class="n">invalid_low</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">total_invalid</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="n">total_invalid</span><span class="si">}</span><span class="s2"> 行无效的价格关系"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># 检查价格是否为正数</span>
+        <span class="n">negative_prices</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'open'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'close'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">negative_prices</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="n">negative_prices</span><span class="si">}</span><span class="s2"> 行负价格或零价格"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"价格关系验证通过"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        验证成交量</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            待验证的数据</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            验证是否通过</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"验证成交量..."</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">'volume'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"缺少volume列"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># 检查负成交量</span>
+        <span class="n">negative_volume</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'volume'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">negative_volume</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="n">negative_volume</span><span class="si">}</span><span class="s2"> 行负成交量"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># 检查零成交量</span>
+        <span class="n">zero_volume</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'volume'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">zero_volume</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="n">zero_volume</span><span class="si">}</span><span class="s2"> 行零成交量"</span><span class="p">)</span>
+
+        <span class="c1"># 检查异常成交量（均值的三倍）</span>
+        <span class="n">volume_mean</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'volume'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">volume_std</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'volume'</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="n">volume_mean</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">volume_std</span>
+
+        <span class="n">outliers</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'volume'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+        <span class="n">outlier_count</span> <span class="o">=</span> <span class="n">outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">outlier_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="n">outlier_count</span><span class="si">}</span><span class="s2"> 行异常成交量 "</span>
+                <span class="sa">f</span><span class="s2">"(&gt;</span><span class="si">{</span><span class="n">threshold</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, 均值: </span><span class="si">{</span><span class="n">volume_mean</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)"</span>
+            <span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"成交量验证通过"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        验证重复数据</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            待验证的数据</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            验证是否通过</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"验证重复数据..."</span><span class="p">)</span>
+
+        <span class="c1"># 检查完全重复的行</span>
+        <span class="n">duplicate_rows</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">duplicate_rows</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="n">duplicate_rows</span><span class="si">}</span><span class="s2"> 行完全重复的数据"</span><span class="p">)</span>
+
+        <span class="c1"># 如果有时间戳列，检查重复的时间戳</span>
+        <span class="k">if</span> <span class="s1">'timestamp'</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">duplicate_timestamps</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">duplicate_timestamps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"发现 </span><span class="si">{</span><span class="n">duplicate_timestamps</span><span class="si">}</span><span class="s2"> 个重复的时间戳"</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"重复数据验证通过"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_report</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        生成验证报告</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Dict</span>
+<span class="sd">            验证报告</span>
+<span class="sd">        """</span>
+        <span class="n">report</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">'validation_time'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+            <span class="s1">'total_errors'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">),</span>
+            <span class="s1">'total_warnings'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">warnings</span><span class="p">),</span>
+            <span class="s1">'errors'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span>
+            <span class="s1">'warnings'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span>
+            <span class="s1">'status'</span><span class="p">:</span> <span class="s1">'PASSED'</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">'FAILED'</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">report</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        执行所有验证</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            待验证的数据</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Dict</span>
+<span class="sd">            验证报告</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">开始数据验证..."</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+        <span class="c1"># 执行所有验证</span>
+        <span class="n">validations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_completeness</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_time_sequence</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_price_relationships</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_volume</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_duplicates</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">validation</span> <span class="ow">in</span> <span class="n">validations</span><span class="p">:</span>
+            <span class="n">validation</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="c1"># 生成报告</span>
+        <span class="n">report</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_report</span><span class="p">()</span>
+
+        <span class="c1"># 打印报告</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"验证报告"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"状态: </span><span class="si">{</span><span class="n">report</span><span class="p">[</span><span class="s1">'status'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"错误数: </span><span class="si">{</span><span class="n">report</span><span class="p">[</span><span class="s1">'total_errors'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"警告数: </span><span class="si">{</span><span class="n">report</span><span class="p">[</span><span class="s1">'total_warnings'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">report</span><span class="p">[</span><span class="s1">'errors'</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">错误:"</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">report</span><span class="p">[</span><span class="s1">'errors'</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">report</span><span class="p">[</span><span class="s1">'warnings'</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">警告:"</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">warning</span> <span class="ow">in</span> <span class="n">report</span><span class="p">[</span><span class="s1">'warnings'</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - </span><span class="si">{</span><span class="n">warning</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">report</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""主函数 - 示例用法"""</span>
+
+    <span class="c1"># 创建验证器</span>
+    <span class="n">validator</span> <span class="o">=</span> <span class="n">DataValidator</span><span class="p">()</span>
+
+    <span class="c1"># 加载数据</span>
+    <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"btcusdt_1m.csv"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">csv_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">])</span>
+
+        <span class="c1"># 验证数据</span>
+        <span class="n">report</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate_all</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="c1"># 保存报告</span>
+        <span class="n">report_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"validation_report.json"</span><span class="p">)</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">report_path</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="c1"># 转换datetime对象为字符串</span>
+            <span class="n">report</span><span class="p">[</span><span class="s1">'validation_time'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">report</span><span class="p">[</span><span class="s1">'validation_time'</span><span class="p">])</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">report</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">验证报告已保存到: </span><span class="si">{</span><span class="n">report_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"文件不存在: </span><span class="si">{</span><span class="n">csv_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></p>
+<h3 id="432">4.3.2 数据清洗策略<a class="headerlink" href="#432" title="Permanent link">&para;</a></h3>
+<p>对于发现的问题，我们需要相应的清洗策略：</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""</span>
+<span class="sd">数据清洗工具</span>
+<span class="sd">"""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">clean_data</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    清洗数据的通用函数</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        原始数据</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        清洗后的数据</span>
+<span class="sd">    """</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"开始数据清洗..."</span><span class="p">)</span>
+    <span class="n">original_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="c1"># 1. 删除完全重复的行</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+
+    <span class="c1"># 2. 处理时间戳重复（保留第一条）</span>
+    <span class="k">if</span> <span class="s1">'timestamp'</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s1">'first'</span><span class="p">)</span>
+
+    <span class="c1"># 3. 处理空值</span>
+    <span class="n">numeric_columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">numeric_columns</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">numeric_columns</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'ffill'</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'bfill'</span><span class="p">)</span>
+
+    <span class="c1"># 4. 修正价格关系</span>
+    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'open'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'low'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]):</span>
+        <span class="c1"># 确保high是最大的</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">'high'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'high'</span><span class="p">,</span> <span class="s1">'open'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># 确保low是最小的</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">'low'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'low'</span><span class="p">,</span> <span class="s1">'open'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># 5. 处理异常值</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'open'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'low'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="c1"># 使用IQR方法检测异常值</span>
+            <span class="n">Q1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+            <span class="n">Q3</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+            <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+
+            <span class="c1"># 定义异常值范围</span>
+            <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+            <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+
+            <span class="c1"># 限制异常值</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="n">upper_bound</span><span class="p">)</span>
+
+    <span class="c1"># 6. 确保价格为正</span>
+    <span class="n">price_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'open'</span><span class="p">,</span> <span class="s1">'high'</span><span class="p">,</span> <span class="s1">'low'</span><span class="p">,</span> <span class="s1">'close'</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">price_columns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+
+    <span class="n">cleaned_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"数据清洗完成: </span><span class="si">{</span><span class="n">original_rows</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">cleaned_rows</span><span class="si">}</span><span class="s2"> 行"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div>
+<h2 id="44">4.4 时间同步处理<a class="headerlink" href="#44" title="Permanent link">&para;</a></h2>
+<p>在真实交易中，数据来自多个源，时间同步至关重要。</p>
+<h3 id="441">4.4.1 时区处理<a class="headerlink" href="#441" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="sd">"""</span>
+<span class="sd">时间同步工具</span>
+<span class="sd">处理不同时区和时间戳格式</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytz</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TimeSynchronizer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""时间同步器"""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_timezone</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'UTC'</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        初始化时间同步器</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        target_timezone : str</span>
+<span class="sd">            目标时区</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_tz</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="n">target_timezone</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert_timezone</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">timestamp_col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">source_timezone</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        转换时区</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            数据</span>
+<span class="sd">        timestamp_col : str</span>
+<span class="sd">            时间戳列名</span>
+<span class="sd">        source_timezone : str</span>
+<span class="sd">            源时区</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            转换后的数据</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"转换时区: </span><span class="si">{</span><span class="n">source_timezone</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">target_tz</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="n">source_tz</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="n">source_timezone</span><span class="p">)</span>
+
+        <span class="c1"># 本地化时间戳</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="n">source_tz</span><span class="p">)</span>
+
+        <span class="c1"># 转换到目标时区</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">tz_convert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_tz</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">align_time_series</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">df_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span>
+        <span class="n">timestamp_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'timestamp'</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        对齐多个时间序列</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df_list : list[pd.DataFrame]</span>
+<span class="sd">            数据框列表</span>
+<span class="sd">        timestamp_col : str</span>
+<span class="sd">            时间戳列名</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[pd.DataFrame]</span>
+<span class="sd">            对齐后的数据框列表</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"对齐时间序列..."</span><span class="p">)</span>
+
+        <span class="c1"># 找到所有时间戳的交集</span>
+        <span class="n">all_timestamps</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">df_list</span><span class="p">:</span>
+            <span class="n">timestamps</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">all_timestamps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">all_timestamps</span> <span class="o">=</span> <span class="n">timestamps</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">all_timestamps</span> <span class="o">&amp;=</span> <span class="n">timestamps</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"共同时间戳数量: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_timestamps</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1"># 过滤每个数据框</span>
+        <span class="n">aligned_dfs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">df_list</span><span class="p">:</span>
+            <span class="n">aligned_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">timestamp_col</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">all_timestamps</span><span class="p">)]</span>
+            <span class="n">aligned_dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aligned_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">timestamp_col</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">aligned_dfs</span>
+</code></pre></div>
+<h2 id="45">4.5 下一步<a class="headerlink" href="#45" title="Permanent link">&para;</a></h2>
+<p>在本章的第一部分，我们学习了：</p>
+<ol>
+<li>NautilusTrader 支持的数据类型</li>
+<li>从 CSV 导入数据的完整流程</li>
+<li>数据质量控制方法</li>
+<li>时间同步处理</li>
+</ol>
+<p>在下一部分，我们将学习：</p>
+<ol>
+<li>Parquet 数据目录的使用</li>
+<li>高效的数据存储和检索</li>
+<li>数据供应商集成</li>
+<li>实时数据处理</li>
+</ol>
+<h2 id="46">4.6 总结<a class="headerlink" href="#46" title="Permanent link">&para;</a></h2>
+<h3 id="_2">关键要点<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ol>
+<li>NautilusTrader 支持多种市场数据类型</li>
+<li>CSV 导入需要仔细的数据验证和清洗</li>
+<li>时间同步对于多源数据至关重要</li>
+<li>高质量的数据是成功回测的基础</li>
+</ol>
+<h3 id="_3">实践建议<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ol>
+<li>始终验证导入的数据</li>
+<li>保存数据验证报告</li>
+<li>使用适当的数据清洗策略</li>
+<li>考虑使用 Parquet 格式提高性能</li>
+</ol>
+<h2 id="47">4.7 参考资料<a class="headerlink" href="#47" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://pandas.pydata.org/docs/">pandas 文档</a></li>
+<li><a href="https://nautilustrader.io/docs/latest/concepts/data/">NautilusTrader 数据处理指南</a></li>
+<li><a href="https://nautilustrader.io/docs/latest/tutorials/">时间序列处理最佳实践</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 NautilusTrader 实战教程 · 仅供学习交流，不构成投资建议
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

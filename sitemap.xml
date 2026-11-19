@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/01-introduction/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/01-introduction/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/01-introduction/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/02-installation/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/02-installation/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/02-installation/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/03-quickstart/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/03-quickstart/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/03-quickstart/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/04-data-import/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/04-data-import/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/04-data-import/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/05-backtest-engine/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/05-backtest-engine/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/05-backtest-engine/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/06-time-events/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/06-time-events/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/06-time-events/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/07-indicators/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/07-indicators/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/07-indicators/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/08-order-management/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/08-order-management/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/08-order-management/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/09-portfolio-risk/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/09-portfolio-risk/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/09-portfolio-risk/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/10-advanced-data/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/10-advanced-data/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/10-advanced-data/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/11-message-actor/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/11-message-actor/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/11-message-actor/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/12-performance-optimization/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/12-performance-optimization/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/12-performance-optimization/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/13-live-trading-architecture/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/13-live-trading-architecture/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/13-live-trading-architecture/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/14-exchange-integration/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/14-exchange-integration/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/14-exchange-integration/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/15-live-strategy-deployment/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/15-live-strategy-deployment/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/15-live-strategy-deployment/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/16-algorithmic-trading-strategies/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/16-algorithmic-trading-strategies/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/16-algorithmic-trading-strategies/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/17-machine-learning-ai/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/17-machine-learning-ai/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/17-machine-learning-ai/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/18-custom-component-development/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/18-custom-component-development/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/18-custom-component-development/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/19-complete-project-example-1/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/19-complete-project-example-1/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/19-complete-project-example-1/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/20-complete-project-example-2/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/20-complete-project-example-2/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/20-complete-project-example-2/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/01-introduction/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/01-introduction/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/01-introduction/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/02-installation/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/02-installation/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/02-installation/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/03-quickstart/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/03-quickstart/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/03-quickstart/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/04-data-import/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/04-data-import/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/04-data-import/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/05-backtest-engine/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/05-backtest-engine/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/05-backtest-engine/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/06-time-events/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/06-time-events/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/06-time-events/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/07-indicators/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/07-indicators/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/07-indicators/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/08-order-management/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/08-order-management/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/08-order-management/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/09-portfolio-risk/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/09-portfolio-risk/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/09-portfolio-risk/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/10-advanced-data/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/10-advanced-data/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/10-advanced-data/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/11-message-actor/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/11-message-actor/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/11-message-actor/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/12-performance-optimization/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/12-performance-optimization/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/12-performance-optimization/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/13-live-trading-architecture/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/13-live-trading-architecture/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/13-live-trading-architecture/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/14-exchange-integration/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/14-exchange-integration/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/14-exchange-integration/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/15-live-strategy-deployment/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/15-live-strategy-deployment/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/15-live-strategy-deployment/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/16-algorithmic-trading-strategies/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/16-algorithmic-trading-strategies/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/16-algorithmic-trading-strategies/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/17-machine-learning-ai/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/17-machine-learning-ai/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/17-machine-learning-ai/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/18-custom-component-development/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/18-custom-component-development/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/18-custom-component-development/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/19-complete-project-example-1/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/19-complete-project-example-1/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/19-complete-project-example-1/"/>
+    </url>
+    <url>
+        <loc>https://henrylin99.github.io/nautilus-trader-tutorials/en/20-complete-project-example-2/</loc>
+        <lastmod>2026-11-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://henrylin99.github.io/nautilus-trader-tutorials/en/20-complete-project-example-2/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://henrylin99.github.io/nautilus-trader-tutorials/20-complete-project-example-2/"/>
+    </url>
+</urlset>
